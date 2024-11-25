@@ -12,6 +12,7 @@ class ModuleProgram;
 class ModuleDebugDraw;
 class ModuleCamera;
 class ModuleEditor;
+class ModuleTexture;
 
 class Application
 {
@@ -31,6 +32,7 @@ public:
     ModuleDebugDraw* GetDebugDraw() const { return debugDraw; }
     ModuleCamera* GetCamera() const { return camera; }
     ModuleEditor* GetEditor() const { return editor; }
+    ModuleTexture* GetTexture() const { return texture; }
 
 private:
 
@@ -41,6 +43,7 @@ private:
     ModuleDebugDraw* debugDraw = nullptr;
     ModuleCamera* camera = nullptr;
     ModuleEditor* editor = nullptr;
+    ModuleTexture* texture = nullptr;
 
 
     std::list<Module*> modules;
