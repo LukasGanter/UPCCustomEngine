@@ -24,7 +24,8 @@ bool ModuleCamera::Init()
 {
 	LOG("Creating Renderer exercise");
 
-	float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
+	float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 1.0f, 1.0f, 0.5f, 0.0f};
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
@@ -84,7 +85,12 @@ update_status ModuleCamera::Update()
 	glEnableVertexAttribArray(0);
 	// size = 3 float per vertex
 	// stride = 0 is equivalent to stride = sizeof(float)*3
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*3*3));
+	
+	//glEnableVertexAttribArray(1);
+	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*3*3 + sizeof(float) * 2 * 3));
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 
 	RenderTriangle();
 
