@@ -22,5 +22,5 @@ public:
 
 private:
 
-	GLuint * textures = nullptr;
+	GLuint textures;
 };

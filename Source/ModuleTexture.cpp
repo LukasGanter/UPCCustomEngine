@@ -64,7 +64,7 @@ bool ModuleTexture::Init()
 		assert(false && "Unsupported format");
 	}
 	
-	glGenTextures(1, textures);
+	glGenTextures(1, &textures);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, image->GetMetadata().width, image->GetMetadata().height,
@@ -95,7 +95,8 @@ update_status ModuleTexture::PostUpdate()
 // Called before quitting
 bool ModuleTexture::CleanUp()
 {
-	glDeleteTextures(1, textures);
+	if (textures)
+		glDeleteTextures(1, &textures);
 	return true;
 }
 
