@@ -1,6 +1,8 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "GL/glew.h"
+
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -19,4 +21,6 @@ public:
 	bool CleanUp();
 
 private:
+
+	GLuint * textures = nullptr;
 };
