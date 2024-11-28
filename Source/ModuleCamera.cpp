@@ -35,18 +35,18 @@ bool ModuleCamera::Init()
 
 update_status ModuleCamera::PreUpdate()
 {
-	float speed = 0.005;
+	float speed = 0.1f;
 	if (App->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 		speed *= 3;
 	}
-
+	
 	// Move if left mouse is pressed and mouse is tracked
-	if (true) {
+	if (App->GetInput()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 		lookAtDirection = lookAtDirection *
 			float3x3::RotateAxisAngle(alignDirection, App->GetInput()->GetMouseMotion().x / 30.);
 
-		/*lookAtDirection = lookAtDirection *
-			float3x3::RotateAxisAngle(float3(1, 0, 0), App->GetInput()->GetMouseMotion().y / 30.);*/
+		lookAtDirection = lookAtDirection *
+			float3x3::RotateAxisAngle(float3(1, 0, 0), App->GetInput()->GetMouseMotion().y / 30.);
 	}
 	
 	if (App->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
@@ -98,11 +98,14 @@ void ModuleCamera::GenerateMatrices()
 		float4x4::RotateZ(M_PI / 4.0f),
 		float3(2.0f, 1.0f, 1.0f));
 
-	Frustum frustum = Frustum();
-	frustum.type = FrustumType::PerspectiveFrustum;
+	float3 tempWorldRight = lookAtDirection.Normalized().Cross(alignDirection);
+	up = tempWorldRight.Cross(lookAtDirection);
+
+	Frustum frustum;
+	frustum.type = PerspectiveFrustum;
 	frustum.pos = location;
 	frustum.front = lookAtDirection.Normalized();
-	frustum.up = alignDirection;
+	frustum.up = up;
 	frustum.nearPlaneDistance = 0.1f;
 	frustum.farPlaneDistance = 100.0f;
 	frustum.verticalFov = M_PI / 4.0f;
@@ -113,8 +116,6 @@ void ModuleCamera::GenerateMatrices()
 
 	// Generates view matrix
 	LookInDirection(lookAtDirection);
-
-
 }
 
 void ModuleCamera::RenderTriangle()
@@ -144,7 +145,7 @@ void ModuleCamera::LookInDirection(const float3& viewDirection)
 		0, 0, 0, 1);
 
 	const float4x4 RotationMatrix = float4x4(right.x, right.y, right.z, 0,
-		alignDirection.x, alignDirection.y, alignDirection.z, 0,
+		up.x, up.y, up.z, 0,
 		-normViewDirection.x, -normViewDirection.y, -normViewDirection.z, 0,
 		0, 0, 0, 1);
 
