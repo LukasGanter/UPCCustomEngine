@@ -22,14 +22,6 @@ ModuleCamera::~ModuleCamera()
 // Called before render is available
 bool ModuleCamera::Init()
 {
-	LOG("Creating Renderer exercise");
-
-	float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 1.0f, 1.0f, 0.5f, 0.0f};
-
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vtx_data), vtx_data, GL_STATIC_DRAW);
 
 	return true;
 }
@@ -81,18 +73,6 @@ update_status ModuleCamera::PreUpdate()
 // Called every draw update
 update_status ModuleCamera::Update()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glEnableVertexAttribArray(0);
-	// size = 3 float per vertex
-	// stride = 0 is equivalent to stride = sizeof(float)*3
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*3*3));
-	
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*3*3 + sizeof(float) * 2 * 3));
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, 0);
-
-	RenderTriangle();
 
 	return UPDATE_CONTINUE;
 }
@@ -124,18 +104,6 @@ void ModuleCamera::GenerateMatrices()
 	LookInDirection(lookAtDirection);
 }
 
-void ModuleCamera::RenderTriangle()
-{
-	const unsigned int program = App->GetProgram()->getProgram();
-	// TODO: retrieve model view and projection
-	glUseProgram(program);
-	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &model[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &view[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &projection[0][0]);
-		// TODO: bind buffer and vertex attributes
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-}
-
 void ModuleCamera::LookAtLocation(const float3& playerPosition, const float3& lookAtPosition)
 {
 	LookInDirection(lookAtPosition - playerPosition);
@@ -160,7 +128,7 @@ void ModuleCamera::LookInDirection(const float3& viewDirection)
 
 update_status ModuleCamera::PostUpdate()
 {
-	SDL_GL_SwapWindow(App->GetWindow()->window);
+	SDL_GL_SwapWindow(App->GetWindow()->window); // TODO Move to other class
 	return UPDATE_CONTINUE;
 }
 
@@ -168,8 +136,6 @@ update_status ModuleCamera::PostUpdate()
 bool ModuleCamera::CleanUp()
 {
 	LOG("Destroying renderer");
-
-	glDeleteBuffers(1, &vbo);
 
 	return true;
 }
