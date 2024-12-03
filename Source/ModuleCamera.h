@@ -35,11 +35,8 @@ public:
 private:
 
 	void GenerateMatrices();
-	void RenderTriangle();
 	void LookAtLocation(const float3& playerPosition, const float3& lookAtPosition);
 	void LookInDirection(const float3& viewDirection);
-
-	unsigned vbo;
 
 	float3 location = float3(0, 1, 5);
 	float3 lookAtDirection = float3(0, 0, -1);

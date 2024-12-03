@@ -19,7 +19,7 @@ bool ModuleTexture::Init()
 {
 	LOG("Creating Renderer context");
 
-	const auto image = std::make_unique<DirectX::ScratchImage>();
+	/*const auto image = std::make_unique<DirectX::ScratchImage>();
 	const auto path = L"Resources/baboon.ppm";
 
 	HRESULT loadingResult = LoadFromDDSFile(path, DirectX::DDS_FLAGS_NONE, nullptr, *image);
@@ -70,7 +70,7 @@ bool ModuleTexture::Init()
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, image->GetMetadata().width, image->GetMetadata().height,
 		0, format, type, image->GetPixels());
 	glGenerateMipmap(GL_TEXTURE_2D);
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);*/
 
 	return true;
 }
@@ -95,8 +95,8 @@ update_status ModuleTexture::PostUpdate()
 // Called before quitting
 bool ModuleTexture::CleanUp()
 {
-	if (textures)
-		glDeleteTextures(1, &textures);
+	//if (textures)
+	//	glDeleteTextures(1, &textures);
 	return true;
 }
 
