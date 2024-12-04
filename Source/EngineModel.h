@@ -2,6 +2,7 @@
 #include "EngineMesh.h"
 #include <vector>
 #include <memory>
+#include "GL/glew.h"
 
 class EngineModel
 {
@@ -11,10 +12,13 @@ public:
 
 	void Load(const char* assetFileName);
 
-	void Render();
+	void Render() const;
 
 private:
+	
+	void LoadMaterials(const tinygltf::Model &srcModel);
 
 	//std::vector<std::unique_ptr<EngineMesh>> meshes;
 	std::vector<EngineMesh*> meshes;
+	std::vector<unsigned> meshTextures;
 };

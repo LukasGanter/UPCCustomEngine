@@ -1,6 +1,5 @@
 #include "Globals.h"
 #include "ModuleTexture.h"
-#include "GL/glew.h"
 #include "DirectXTex.h"
 #include <memory>
 
@@ -19,8 +18,39 @@ bool ModuleTexture::Init()
 {
 	LOG("Creating Renderer context");
 
-	/*const auto image = std::make_unique<DirectX::ScratchImage>();
-	const auto path = L"Resources/baboon.ppm";
+	return true;
+}
+
+update_status ModuleTexture::PreUpdate()
+{
+	
+	return UPDATE_CONTINUE;
+}
+
+// Called every draw update
+update_status ModuleTexture::Update()
+{
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleTexture::PostUpdate()
+{
+	return UPDATE_CONTINUE;
+}
+
+// Called before quitting
+bool ModuleTexture::CleanUp()
+{
+	return true;
+}
+
+GLuint ModuleTexture::LoadTexture(const std::string& texturePath) const
+{
+	// TODO Only works for ASCII strings
+	std::wstring widestr = std::wstring(texturePath.begin(), texturePath.end());
+	const wchar_t* path = widestr.c_str();
+	
+	const auto image = std::make_unique<DirectX::ScratchImage>();
 
 	HRESULT loadingResult = LoadFromDDSFile(path, DirectX::DDS_FLAGS_NONE, nullptr, *image);
 	if (FAILED(loadingResult))
@@ -32,7 +62,7 @@ bool ModuleTexture::Init()
 			if (FAILED(loadingResult))
 			{
 				LOG("Failed to load image");
-				return true;
+				return false;
 			}
 		}
 	}
@@ -63,40 +93,16 @@ bool ModuleTexture::Init()
 	default:
 		assert(false && "Unsupported format");
 	}
+	GLuint texture;
 	
-	glGenTextures(1, &textures);
+	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, image->GetMetadata().width, image->GetMetadata().height,
 		0, format, type, image->GetPixels());
 	glGenerateMipmap(GL_TEXTURE_2D);
-	glActiveTexture(GL_TEXTURE0);*/
+	glActiveTexture(GL_TEXTURE0);	// TODO Always Texture0 can not be correct
 
-	return true;
-}
-
-update_status ModuleTexture::PreUpdate()
-{
-	
-	return UPDATE_CONTINUE;
-}
-
-// Called every draw update
-update_status ModuleTexture::Update()
-{
-	return UPDATE_CONTINUE;
-}
-
-update_status ModuleTexture::PostUpdate()
-{
-	return UPDATE_CONTINUE;
-}
-
-// Called before quitting
-bool ModuleTexture::CleanUp()
-{
-	//if (textures)
-	//	glDeleteTextures(1, &textures);
-	return true;
+	return texture;
 }
 

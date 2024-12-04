@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 #include "Module.h"
 #include "Globals.h"
 #include "GL/glew.h"
@@ -20,7 +22,5 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-private:
-
-	GLuint textures;
+	GLuint LoadTexture(const std::string& texturePath) const;
 };

@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 //#include "tinyGltf/tiny_gltf.h"
 
@@ -18,7 +19,7 @@ public:
 
 	void Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
 
-	void Draw();
+	void Draw(const std::vector<unsigned>& textures);
 
 private:
 

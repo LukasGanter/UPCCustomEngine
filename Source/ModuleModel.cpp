@@ -17,7 +17,7 @@ ModuleModel::ModuleModel()
 // Destructor
 ModuleModel::~ModuleModel()
 {
-	delete houseModel;
+	
 }
 
 // Called before render is available
@@ -53,6 +53,7 @@ update_status ModuleModel::PostUpdate()
 // Called before quitting
 bool ModuleModel::CleanUp()
 {
+	delete houseModel;
 	return true;
 }
 
