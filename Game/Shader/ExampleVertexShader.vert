@@ -10,6 +10,6 @@ out vec2 uv0;
 
 void main()
 {
-gl_Position = proj*view*model*my_vertex_position;
+gl_Position = proj*view*model*vec4(my_vertex_position, 1);
 uv0 = vertex_uv0;
 }
