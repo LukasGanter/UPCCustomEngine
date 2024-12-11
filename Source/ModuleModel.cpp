@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleProgram.h"
 #include "ModuleModel.h"
+#include "ModuleCamera.h"
 
 #define TINYGLTF_NO_STB_IMAGE_WRITE
 #define TINYGLTF_NO_STB_IMAGE
@@ -40,7 +41,17 @@ update_status ModuleModel::PreUpdate()
 // Called every draw update
 update_status ModuleModel::Update()
 {
-	glUseProgram(App->GetProgram()->getProgram());
+	const unsigned int program = App->GetProgram()->getProgram();
+	glUseProgram(program);
+
+	float4x4 modelMatrix = App->GetCamera()->getModelMatrix();	// Change to const &? Might copy the matrix
+	float4x4 viewMatrix = App->GetCamera()->getModelMatrix();// Change to const &? Might copy the matrix
+	float4x4 projectionMatrix = App->GetCamera()->getModelMatrix();// Change to const &? Might copy the matrix
+	
+	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &modelMatrix[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &viewMatrix[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &projectionMatrix[0][0]);
+	
 	if (houseModel != nullptr) {
 		houseModel->Render();
 	}
