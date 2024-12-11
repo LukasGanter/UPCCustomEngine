@@ -43,5 +43,6 @@ private:
 
 	size_t indexCount = -1;
 	size_t vertexCount = -1;
+	int materialIndex = -1;
 
 };

@@ -128,7 +128,6 @@ void ModuleCamera::LookInDirection(const float3& viewDirection)
 
 update_status ModuleCamera::PostUpdate()
 {
-	SDL_GL_SwapWindow(App->GetWindow()->window); // TODO Move to other class
 	return UPDATE_CONTINUE;
 }
 

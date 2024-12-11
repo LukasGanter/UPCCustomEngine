@@ -1,5 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
+#include "ModuleProgram.h"
 #include "ModuleModel.h"
 
 #define TINYGLTF_NO_STB_IMAGE_WRITE
@@ -39,6 +40,7 @@ update_status ModuleModel::PreUpdate()
 // Called every draw update
 update_status ModuleModel::Update()
 {
+	glUseProgram(App->GetProgram()->getProgram());
 	if (houseModel != nullptr) {
 		houseModel->Render();
 	}

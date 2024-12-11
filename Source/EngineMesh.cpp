@@ -21,6 +21,7 @@ EngineMesh::~EngineMesh()
 
 void EngineMesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive)
 {
+	materialIndex = primitive.material;
 	LoadVBO(model, mesh, primitive);
 	LoadEBO(model, mesh, primitive);
 	CreateVAO();
@@ -62,7 +63,7 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 			Vertex* ptr = reinterpret_cast<Vertex*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 			for (size_t i = 0; i < vertexCount; ++i)
 			{
-				const float3 pos = *reinterpret_cast<const float3*>(bufferPos) * 100.;
+				const float3 pos = *reinterpret_cast<const float3*>(bufferPos);
 				const float2 texCoord = *reinterpret_cast<const float2*>(texCoordbufferPos);
 				ptr[i] = {pos, texCoord};
 				bufferPos += posView.byteStride == 0 ? sizeof(float) * 3 : posView.byteStride;
@@ -76,7 +77,7 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 			float3* ptr = reinterpret_cast<float3*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 			for (size_t i = 0; i < vertexCount; ++i)
 			{
-				ptr[i] = *reinterpret_cast<const float3*>(bufferPos) * 100.;
+				ptr[i] = *reinterpret_cast<const float3*>(bufferPos);
 				bufferPos += posView.byteStride == 0 ? sizeof(float) * 3 : posView.byteStride;
 			}
 			glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -138,12 +139,12 @@ void EngineMesh::CreateVAO()
 
 void EngineMesh::Draw(const std::vector<unsigned>& textures)
 {
-	glUseProgram(App->GetProgram()->getProgram());
-
-	/*glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, textures[0]);	// TODO Replace hardcoded 0 with the MaterialIndex
-	glUniform1i(glGetUniformLocation(App->GetProgram()->getProgram(), "Diffuse"), 0);*/
-	
+	/*if (materialIndex != -1 && textures.size() > materialIndex)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textures[materialIndex]);
+		glUniform1i(glGetUniformLocation(App->GetProgram()->getProgram(), "Diffuse"), 0);
+	}*/
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
 }
