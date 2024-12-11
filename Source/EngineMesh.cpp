@@ -120,7 +120,6 @@ void EngineMesh::LoadEBO(const Model& model, const Mesh& mesh, const Primitive& 
 	}
 }
 
-
 void EngineMesh::CreateVAO()
 {
 	glGenVertexArrays(1, &vao);
@@ -139,20 +138,18 @@ void EngineMesh::Draw(const std::vector<unsigned>& textures)
 {
 	glUseProgram(App->GetProgram()->getProgram());
 
-	/*glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float)*3, (void*)0);
-	glDrawArrays(GL_TRIANGLES, 0, vertexCount);*/
-
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textures[0]);	// TODO Replace hardcoded 0 with the MaterialIndex
+	glUniform1i(glGetUniformLocation(App->GetProgram()->getProgram(), "Diffuse"), 0);
+	
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float)*3+sizeof(float)*2, (void*)0);
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float)*3+sizeof(float)*2, (void*)(sizeof(float)*3));
-	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-
-
-	 
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
+	
 	/*glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textures[0]);	// TODO Replace hardcoded 0 with the MaterialIndex
 	glUniform1i(glGetUniformLocation(App->GetProgram()->getProgram(), "Diffuse"), 0);
