@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 
+#include "Math/float3.h"
+#include "Math/float2.h"
+
 //#include "tinyGltf/tiny_gltf.h"
 
 namespace tinygltf
@@ -10,6 +13,11 @@ namespace tinygltf
 	struct Primitive;
 }
 
+struct Vertex
+{
+	float3 Position;
+	float2 TexCoords;
+};
 
 class EngineMesh
 {
@@ -33,6 +41,7 @@ private:
 	unsigned ebo;
 	unsigned vao;
 
-	int indexCount = -1;
+	size_t indexCount = -1;
+	size_t vertexCount = -1;
 
 };
