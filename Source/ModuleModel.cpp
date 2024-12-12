@@ -43,14 +43,10 @@ update_status ModuleModel::Update()
 {
 	const unsigned int program = App->GetProgram()->getProgram();
 	glUseProgram(program);
-
-	float4x4 modelMatrix = App->GetCamera()->getModelMatrix();	// Change to const &? Might copy the matrix
-	float4x4 viewMatrix = App->GetCamera()->getModelMatrix();// Change to const &? Might copy the matrix
-	float4x4 projectionMatrix = App->GetCamera()->getModelMatrix();// Change to const &? Might copy the matrix
 	
-	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &modelMatrix[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &viewMatrix[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &projectionMatrix[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &App->GetCamera()->model[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &App->GetCamera()->view[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &App->GetCamera()->projection[0][0]);
 	
 	if (houseModel != nullptr) {
 		houseModel->Render();

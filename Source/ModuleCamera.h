@@ -19,18 +19,8 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	void WindowResized(unsigned width, unsigned height);
-
-	const float4x4& getModelMatrix() const {
-		return model;
-	}
-
-	const float4x4& getViewMatrix() const {
-		return view;
-	}
-
-	const float4x4& getProjectionMatrix() const {
-		return projection;
-	}
+	
+	float4x4 model, view, projection;
 
 private:
 
@@ -43,6 +33,4 @@ private:
 	float3 right = float3(1, 0, 0);
 	float3 up = float3(0, 1, 0);
 	float3 alignDirection = float3(0, 1, 0);
-	
-	float4x4 model, view, projection;
 };

@@ -47,7 +47,7 @@ void EngineModel::Load(const char* assetFileName)
 			meshes.push_back(mesh);
 		}
 	}
-	//LoadMaterials(model);
+	LoadMaterials(model);
 }
 
 void EngineModel::Render() const

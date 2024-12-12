@@ -619,7 +619,7 @@ update_status  ModuleDebugDraw::Update()
     int height = 0;
     SDL_GetWindowSize(App->GetWindow()->window, &width, &height);
 
-    Draw(App->GetCamera()->getViewMatrix(), App->GetCamera()->getProjectionMatrix(), width, height);
+    Draw(App->GetCamera()->view, App->GetCamera()->projection, width, height);
 
 	return UPDATE_CONTINUE;
 }
