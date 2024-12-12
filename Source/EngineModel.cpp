@@ -65,7 +65,7 @@ void EngineModel::LoadMaterials(const tinygltf::Model& srcModel)
 		{
 			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
 			const tinygltf::Image& image = srcModel.images[texture.source];
-			textureId = App->GetTexture()->LoadTexture(image.uri);
+			textureId = App->GetTexture()->LoadTexture("Resources/Models/BakerHouse/" + image.uri);	// TODO Remove hard coded path
 		}
 		meshTextures.push_back(textureId);
 	}

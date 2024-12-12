@@ -143,7 +143,6 @@ void EngineMesh::Draw(const std::vector<unsigned>& textures)
 	{
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textures[materialIndex]);
-		glUniform1i(glGetUniformLocation(App->GetProgram()->getProgram(), "Diffuse"), 0);
 	}
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);

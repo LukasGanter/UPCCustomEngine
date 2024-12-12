@@ -96,13 +96,13 @@ GLuint ModuleTexture::LoadTexture(const std::string& texturePath) const
 	GLuint texture;
 	
 	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, image->GetMetadata().width, image->GetMetadata().height,
 		0, format, type, image->GetPixels());
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glActiveTexture(GL_TEXTURE0);	// TODO Always Texture0 can not be correct
-
+	
 	return texture;
 }
 
