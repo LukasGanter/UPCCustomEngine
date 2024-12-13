@@ -37,10 +37,10 @@ update_status ModuleCamera::PreUpdate()
 	// Move if left mouse is pressed and mouse is tracked
 	if (App->GetInput()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 		lookAtDirection = lookAtDirection *
-			float3x3::RotateAxisAngle(alignDirection, App->GetInput()->GetMouseMotion().x / 30.);
-
+			float3x3::RotateAxisAngle(right, App->GetInput()->GetMouseMotion().y / 30.);
+		
 		lookAtDirection = lookAtDirection *
-			float3x3::RotateAxisAngle(float3(1, 0, 0), App->GetInput()->GetMouseMotion().y / 30.);
+			float3x3::RotateAxisAngle(alignDirection, App->GetInput()->GetMouseMotion().x / 30.);
 	}
 	
 	if (App->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {

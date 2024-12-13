@@ -32,9 +32,11 @@ private:
 	void LookAtLocation(const float3& playerPosition, const float3& lookAtPosition);
 	void LookInDirection(const float3& viewDirection);
 
-	float3 location = float3(0, 2, 7);
-	float3 lookAtDirection = float3(0, 0, -1);
-	float3 right = float3(1, 0, 0);
-	float3 up = float3(0, 1, 0);
+	float3 location = float3(7, 2, 0);
+	float3 lookAtDirection = float3(-1, 0, 0);
+	float3 right = float3::nan;
+	float3 up = float3::nan;
 	float3 alignDirection = float3(0, 1, 0);
+
+	//bool orbiting = false;
 };
