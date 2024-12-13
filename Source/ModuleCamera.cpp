@@ -9,6 +9,7 @@
 #include "ModuleInput.h"
 #include "Math/float3x3.h"
 #include "Math/MathConstants.h"
+#include "Math/MathFunc.h"
 
 ModuleCamera::ModuleCamera()
 {
@@ -29,43 +30,58 @@ bool ModuleCamera::Init()
 
 update_status ModuleCamera::PreUpdate()
 {
-	float speed = 0.1f;
-	if (App->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		speed *= 3;
-	}
 	
-	// Move if left mouse is pressed and mouse is tracked
-	if (App->GetInput()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
-		lookAtDirection = lookAtDirection *
-			float3x3::RotateAxisAngle(right, App->GetInput()->GetMouseMotion().y / 30.);
+	if (orbiting)
+	{
+		if (App->GetInput()->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
+			StopOrbiting();
+		}
+	} else {
+		if (App->GetInput()->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
+			StartOrbiting();
+		}
+		if (App->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) {
+			FocusMesh();
+		}
 		
-		lookAtDirection = lookAtDirection *
-			float3x3::RotateAxisAngle(alignDirection, App->GetInput()->GetMouseMotion().x / 30.);
+		float speed = 0.1f;
+		if (App->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
+			speed *= 3;
+		}
+		
+		// Move if left mouse is pressed and mouse is tracked
+		if (App->GetInput()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+			lookAtDirection = lookAtDirection *
+				float3x3::RotateAxisAngle(right, App->GetInput()->GetMouseMotion().y / 30.);
+		
+			lookAtDirection = lookAtDirection *
+				float3x3::RotateAxisAngle(alignDirection, App->GetInput()->GetMouseMotion().x / 30.);
+		}
+	
+		if (App->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			location += lookAtDirection * speed;
+		}
+	
+		if (App->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			location -= lookAtDirection * speed;
+		}
+
+		if (App->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			location -= right * speed;
+		}
+	
+		if (App->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			location += right * speed;
+		}
+
+		if (App->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) {
+			location.y += speed;
+		}
+		else if (App->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) {
+			location.y -= speed;
+		}
 	}
 	
-	if (App->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		location += lookAtDirection * speed;
-	}
-	
-	if (App->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		location -= lookAtDirection * speed;
-	}
-
-	if (App->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		location -= right * speed;
-	}
-	
-	if (App->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		location += right * speed;
-	}
-
-	if (App->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) {
-		location.y += speed;
-	}
-	else if (App->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) {
-		location.y -= speed;
-	}
-
 	GenerateMatrices();
 
 	return UPDATE_CONTINUE;
@@ -74,8 +90,42 @@ update_status ModuleCamera::PreUpdate()
 // Called every draw update
 update_status ModuleCamera::Update(const float deltaTime)
 {
-
+	if (orbiting)
+	{
+		currentOrbitingRads += deltaTime / 1000.0f;
+		currentOrbitingRads = Mod(currentOrbitingRads, pi * 2.f);
+		location = float3(orbitingRadius * cos(currentOrbitingRads), 2, orbitingRadius * sin(currentOrbitingRads));
+		lookAtDirection = -location;
+		lookAtDirection.Normalize();
+	}
+	
 	return UPDATE_CONTINUE;
+}
+
+void ModuleCamera::StartOrbiting()
+{
+	orbitingRadius = GetDistanceForWholeMeshView();
+	currentOrbitingRads = 0;
+
+	location = float3(orbitingRadius, 2, 0);
+	lookAtDirection = float3(-1, 0, 0);
+	
+	orbiting = true;
+}
+
+void ModuleCamera::StopOrbiting()
+{
+	orbiting = false;
+}
+
+float ModuleCamera::GetDistanceForWholeMeshView() const
+{
+	// TODO
+	return 7;
+}
+
+void ModuleCamera::FocusMesh()
+{
 }
 
 void ModuleCamera::GenerateMatrices()

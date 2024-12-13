@@ -26,7 +26,13 @@ public:
 	float farPlaneDistance = 100.0f;
 	float horizontalFOV = 90.0f;
 
+	void StartOrbiting();
+	void StopOrbiting();
+
 private:
+
+	float GetDistanceForWholeMeshView() const;
+	void FocusMesh();
 
 	void GenerateMatrices();
 	void LookAtLocation(const float3& playerPosition, const float3& lookAtPosition);
@@ -38,5 +44,7 @@ private:
 	float3 up = float3::nan;
 	float3 alignDirection = float3(0, 1, 0);
 
-	//bool orbiting = false;
+	bool orbiting = false;
+	float orbitingRadius;
+	float currentOrbitingRads;
 };
