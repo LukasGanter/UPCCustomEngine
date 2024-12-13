@@ -7,6 +7,7 @@
 #define TINYGLTF_NO_EXTERNAL_IMAGE 
 #include "ModuleTexture.h"
 #include "tinyGltf/tiny_gltf.h"
+#include "tinyGltf/tiny_gltf.h"
 
 EngineModel::EngineModel()
 {
@@ -25,15 +26,15 @@ EngineModel::~EngineModel()
 	meshTextures.clear();
 }
 
-void EngineModel::Load(const char* assetFileName)
+void EngineModel::Load(const std::string& modelPath, const std::string& modelName)
 {
 	tinygltf::TinyGLTF gltfContext;
 	tinygltf::Model model;
 	std::string error, warning;
-	bool loadOk = gltfContext.LoadASCIIFromFile(&model, &error, &warning, assetFileName);
+	bool loadOk = gltfContext.LoadASCIIFromFile(&model, &error, &warning, modelPath + modelName);
 	if (!loadOk)
 	{
-		LOG("Error loading %s: %s", assetFileName, error.c_str());
+		LOG("Error loading %s: %s", &modelName, error.c_str());
 		return;
 	}
 
@@ -47,7 +48,7 @@ void EngineModel::Load(const char* assetFileName)
 			meshes.push_back(mesh);
 		}
 	}
-	LoadMaterials(model);
+	LoadMaterials(modelPath, model);
 }
 
 void EngineModel::Render() const
@@ -56,7 +57,7 @@ void EngineModel::Render() const
 		mesh->Draw(meshTextures);
 }
 
-void EngineModel::LoadMaterials(const tinygltf::Model& srcModel)
+void EngineModel::LoadMaterials(const std::string& modelPath, const tinygltf::Model& srcModel)
 {
 	for(const auto& srcMaterial : srcModel.materials)
 	{
@@ -65,7 +66,7 @@ void EngineModel::LoadMaterials(const tinygltf::Model& srcModel)
 		{
 			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
 			const tinygltf::Image& image = srcModel.images[texture.source];
-			textureId = App->GetTexture()->LoadTexture("Resources/Models/BakerHouse/" + image.uri);	// TODO Remove hard coded path
+			textureId = App->GetTexture()->LoadTexture(modelPath + image.uri);	
 		}
 		meshTextures.push_back(textureId);
 	}

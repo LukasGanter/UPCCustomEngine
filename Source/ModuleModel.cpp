@@ -28,7 +28,7 @@ bool ModuleModel::Init()
 	LOG("Creating Base Model");
 
 	houseModel = new EngineModel();
-	houseModel->Load("Resources/Models/BakerHouse/BakerHouse.gltf");
+	houseModel->Load("Resources/Models/BakerHouse/", "BakerHouse.gltf");
 
 	return true;
 }
