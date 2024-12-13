@@ -36,6 +36,9 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->GetWindow()->window, App->GetOpenGL()->GetContext());
 	ImGui_ImplOpenGL3_Init("#version 460");
 
+	deltaTickBuffer = std::vector<float>( tickBufferLength);
+	fpsBuffer = std::vector<float>( tickBufferLength);
+
 	return true;
 }
 
@@ -48,6 +51,14 @@ update_status ModuleEditor::PreUpdate()
 // Called every draw update
 update_status ModuleEditor::Update(const float deltaTime)
 {
+	if (tickBufferPtr >= tickBufferLength)
+	{
+		tickBufferPtr = 0;
+	}
+	deltaTickBuffer[tickBufferPtr] = deltaTime;
+	fpsBuffer[tickBufferPtr] = 1000. / deltaTime;
+	tickBufferPtr++;
+	
 	Draw();
 
 	return UPDATE_CONTINUE;
@@ -89,6 +100,12 @@ void ModuleEditor::Draw()
 			if (ImGui::MenuItem("Graphics")) {
 				show_graphics_window = !show_graphics_window;
 			}
+			if (ImGui::MenuItem("Application Profiler")) {
+				show_application_window = !show_application_window;
+			}
+			if (ImGui::MenuItem("Logs")) {
+				show_log_window = !show_log_window;
+			}
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
@@ -103,6 +120,12 @@ void ModuleEditor::Draw()
 
 	if (show_graphics_window)
 		ShowGraphicsWindow(&show_graphics_window);
+
+	if (show_application_window)
+		ShowApplicationsWindow(&show_application_window);
+
+	if (show_log_window)
+		ShowLogWindow(&show_log_window);
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -147,4 +170,19 @@ void ModuleEditor::ShowGraphicsWindow(bool* open)
 	if (ImGui::Button("Close")) {
 		show_graphics_window = false;
 	}
+}
+
+void ModuleEditor::ShowApplicationsWindow(bool* open)
+{
+	if (ImGui::CollapsingHeader("Application")) {
+		ImGui::PlotHistogram("##framerate", &fpsBuffer[0], fpsBuffer.size(), tickBufferPtr, "Framerate", 0.0f, 100.f, ImVec2(310, 100));
+		ImGui::PlotHistogram("##milliseconds", &deltaTickBuffer[0], deltaTickBuffer.size(), tickBufferPtr, "Milliseconds", 0.0f, 40.f, ImVec2(310, 100));
+	}
+	if (ImGui::Button("Close")) {
+		show_application_window = false;
+	}
+}
+
+void ModuleEditor::ShowLogWindow(bool* open)
+{
 }

@@ -20,3 +20,4 @@ enum update_status
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "Custom game engine"
+#define FPS 1000

@@ -24,8 +24,7 @@ int main(int argc, char ** argv)
 {
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
-
-	const int FPS = 60;
+	
 	const Uint64 updateTargetTickDuration = 1000 / FPS;
 	Uint64 lastUpdateTicks = 0; 
 
