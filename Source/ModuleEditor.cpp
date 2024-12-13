@@ -185,4 +185,23 @@ void ModuleEditor::ShowApplicationsWindow(bool* open)
 
 void ModuleEditor::ShowLogWindow(bool* open)
 {
+	if (ImGui::CollapsingHeader("Log")) {
+		unsigned int workingPtr = logMsgBufferPtr + 1;
+		for (unsigned int i = 0; i < logMsgBuffer.size(); i++)
+		{
+			if (workingPtr >= logMsgBuffer.size())
+			{
+				workingPtr = 0;
+			}
+			const char* message = logMsgBuffer[workingPtr];
+			if (message != nullptr)
+			{
+				ImGui::Text(message);
+			}
+			workingPtr++;
+		}
+	}
+	if (ImGui::Button("Close")) {
+		show_log_window = false;
+	}
 }

@@ -2,7 +2,6 @@
 #include <ostream>
 #include <stdlib.h>
 #include "Application.h"
-#include "ModuleOpenGL.h"
 #include "Globals.h"
 
 #include "SDL/include/SDL.h"
@@ -26,7 +25,7 @@ int main(int argc, char ** argv)
 	main_states state = MAIN_CREATION;
 	
 	const Uint64 updateTargetTickDuration = 1000 / FPS;
-	Uint64 lastUpdateTicks = 0; 
+	Uint64 lastUpdateTicks = 0;
 
 	while (state != MAIN_EXIT)
 	{
@@ -61,7 +60,6 @@ int main(int argc, char ** argv)
 				const Uint64 deltaTicks = currentTicks - lastUpdateTicks;
 				if (deltaTicks > updateTargetTickDuration) {
 					int update_return = App->Update(deltaTicks);
-					std::cout << deltaTicks << std::endl;
 
 					if (update_return == UPDATE_ERROR)
 					{

@@ -2,6 +2,7 @@
 #define NOMINMAX
 #include <windows.h>
 #include <stdio.h>
+#include <vector>
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -21,3 +22,7 @@ enum update_status
 #define VSYNC true
 #define TITLE "Custom game engine"
 #define FPS 1000
+#define LOG_MSG_BUFFER_SIZE 40
+
+extern int logMsgBufferPtr;
+extern std::vector<char*> logMsgBuffer;

@@ -43,4 +43,5 @@ private:
 	int tickBufferPtr = 0;
 	std::vector<float> deltaTickBuffer;
 	std::vector<float> fpsBuffer;
+	
 };
