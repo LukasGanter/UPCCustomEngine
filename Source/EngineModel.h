@@ -1,8 +1,6 @@
 #pragma once
 #include "EngineMesh.h"
 #include <vector>
-#include <memory>
-#include "GL/glew.h"
 
 class EngineModel
 {
@@ -14,6 +12,9 @@ public:
 
 	void Render() const;
 
+	const float3* getMinPosValues() const { return minPosValues; }
+	const float3* getMaxPosValues() const { return maxPosValues; }
+
 private:
 	
 	void LoadMaterials(const std::string& modelPath, const tinygltf::Model &srcModel);
@@ -21,4 +22,8 @@ private:
 	//std::vector<std::unique_ptr<EngineMesh>> meshes;
 	std::vector<EngineMesh*> meshes;
 	std::vector<unsigned> meshTextures;
+
+
+	float3* minPosValues = nullptr;
+	float3* maxPosValues = nullptr;
 };

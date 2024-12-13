@@ -17,6 +17,8 @@ EngineMesh::EngineMesh()
 // Destructor
 EngineMesh::~EngineMesh()
 {
+	delete minPosValues;
+	delete maxPosValues;
 }
 
 void EngineMesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive)
@@ -34,7 +36,14 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 	{
 		const Accessor& posAcc = model.accessors[itPos->second];
 		vertexCount = posAcc.count;
-		// TODO posAcc.getMinValues and getMaxValues for bounding box
+		if (posAcc.minValues.size() == 3)
+		{
+			minPosValues = new float3(posAcc.minValues[0] * 100.0f, posAcc.minValues[1] * 100.0f, posAcc.minValues[2] * 100.0f);
+		}
+		if (posAcc.maxValues.size() == 3)
+		{
+			maxPosValues = new float3(posAcc.maxValues[0] * 100.0f, posAcc.maxValues[1] * 100.0f, posAcc.maxValues[2] * 100.0f);
+		}
 		SDL_assert(posAcc.type == TINYGLTF_TYPE_VEC3);
 		SDL_assert(posAcc.componentType == GL_FLOAT);
 		const BufferView& posView = model.bufferViews[posAcc.bufferView];

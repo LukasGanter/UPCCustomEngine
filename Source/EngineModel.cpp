@@ -24,6 +24,9 @@ EngineModel::~EngineModel()
 	for (const auto& texture : meshTextures)
 		glDeleteTextures(1, &texture);
 	meshTextures.clear();
+	
+	delete minPosValues;
+	delete maxPosValues;
 }
 
 void EngineModel::Load(const std::string& modelPath, const std::string& modelName)
@@ -34,7 +37,7 @@ void EngineModel::Load(const std::string& modelPath, const std::string& modelNam
 	bool loadOk = gltfContext.LoadASCIIFromFile(&model, &error, &warning, modelPath + modelName);
 	if (!loadOk)
 	{
-		LOG("Error loading %s: %s", &modelName, error.c_str());
+		LOG("Error loading %s: %s", &modelName, error.c_str())
 		return;
 	}
 
@@ -45,6 +48,31 @@ void EngineModel::Load(const std::string& modelPath, const std::string& modelNam
 			auto mesh =  new EngineMesh();
 			mesh->Load(model, srcMesh, primitive);
 
+			const float3* meshMinPosValues = mesh->GetMinPosValues();
+			if (meshMinPosValues != nullptr) {
+				if (minPosValues == nullptr)
+				{
+					minPosValues = new float3(*meshMinPosValues);
+				} else
+				{
+					minPosValues = new float3(Min(*minPosValues, *meshMinPosValues));
+				}
+				
+			}
+
+			const float3* meshMaxPosValues = mesh->GetMaxPosValues();
+			if (meshMinPosValues != nullptr)
+			{
+				if (maxPosValues == nullptr)
+				{
+					maxPosValues = new float3(*meshMaxPosValues);
+				} else
+				{
+					maxPosValues = new float3(Max(*maxPosValues, *meshMaxPosValues));
+				}
+				
+			}
+			
 			meshes.push_back(mesh);
 		}
 	}

@@ -1,12 +1,15 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleCamera.h"
+
+#include "EngineModel.h"
 #include "ModuleWindow.h"
 #include "ModuleProgram.h"
 #include "SDL.h"
 #include "GL/glew.h"
 #include "Geometry/Frustum.h"
 #include "ModuleInput.h"
+#include "ModuleModel.h"
 #include "Math/float3x3.h"
 #include "Math/MathConstants.h"
 #include "Math/MathFunc.h"
@@ -94,8 +97,8 @@ update_status ModuleCamera::Update(const float deltaTime)
 	{
 		currentOrbitingRads += deltaTime / 1000.0f;
 		currentOrbitingRads = Mod(currentOrbitingRads, pi * 2.f);
-		location = float3(orbitingRadius * cos(currentOrbitingRads), 2, orbitingRadius * sin(currentOrbitingRads));
-		lookAtDirection = -location;
+		location = float3(orbitingRadius * cos(currentOrbitingRads), location.y, orbitingRadius * sin(currentOrbitingRads));
+		lookAtDirection = target - location;
 		lookAtDirection.Normalize();
 	}
 	
@@ -106,8 +109,9 @@ void ModuleCamera::StartOrbiting()
 {
 	orbitingRadius = GetDistanceForWholeMeshView();
 	currentOrbitingRads = 0;
+	target = GetCenterOfMesh();
 
-	location = float3(orbitingRadius, 2, 0);
+	location = float3(orbitingRadius, GetMaxHeightForMeshView(), 0);
 	lookAtDirection = float3(-1, 0, 0);
 	
 	orbiting = true;
@@ -120,12 +124,59 @@ void ModuleCamera::StopOrbiting()
 
 float ModuleCamera::GetDistanceForWholeMeshView() const
 {
-	// TODO
-	return 7;
+	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
+	if (loadedModel == nullptr) return 1;
+
+	const float3* minPos = loadedModel->getMinPosValues();
+	const float3* maxPos = loadedModel->getMaxPosValues();
+
+	if (minPos == nullptr || maxPos == nullptr) return 1;
+
+	return Max(minPos->Length(), maxPos->Length());
+}
+
+float ModuleCamera::GetCenterHeightForWholeMeshView() const
+{
+	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
+	if (loadedModel == nullptr) return 1;
+
+	const float3* minPos = loadedModel->getMinPosValues();
+	const float3* maxPos = loadedModel->getMaxPosValues();
+
+	if (minPos == nullptr || maxPos == nullptr) return 1;
+
+	return (minPos->y + maxPos->y) / 2.f;
+}
+
+float ModuleCamera::GetMaxHeightForMeshView() const
+{
+	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
+	if (loadedModel == nullptr) return 1;
+	
+	const float3* maxPos = loadedModel->getMaxPosValues();
+
+	if (maxPos == nullptr) return 1;
+
+	return maxPos->y;
+}
+
+float3 ModuleCamera::GetCenterOfMesh() const
+{
+	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
+	if (loadedModel == nullptr) return float3::zero;
+
+	const float3* minPos = loadedModel->getMinPosValues();
+	const float3* maxPos = loadedModel->getMaxPosValues();
+
+	if (minPos == nullptr || maxPos == nullptr) return float3::zero;
+
+	return (*minPos + *maxPos) / 2.f;
 }
 
 void ModuleCamera::FocusMesh()
 {
+	location = float3(GetDistanceForWholeMeshView(), GetCenterHeightForWholeMeshView(), 0);
+	lookAtDirection = float3(-1, 0, 0);
 }
 
 void ModuleCamera::GenerateMatrices()

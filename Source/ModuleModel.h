@@ -14,7 +14,9 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	EngineModel* GetLoadedModel() const { return loadedModel;}
+
 private:
 
-	EngineModel* houseModel = nullptr;
+	EngineModel* loadedModel = nullptr;
 };

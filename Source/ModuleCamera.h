@@ -32,6 +32,9 @@ public:
 private:
 
 	float GetDistanceForWholeMeshView() const;
+	float GetCenterHeightForWholeMeshView() const;
+	float GetMaxHeightForMeshView() const;
+	float3 GetCenterOfMesh() const;
 	void FocusMesh();
 
 	void GenerateMatrices();
@@ -47,4 +50,5 @@ private:
 	bool orbiting = false;
 	float orbitingRadius;
 	float currentOrbitingRads;
+	float3 target = float3::zero;
 };
