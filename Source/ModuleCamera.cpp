@@ -80,9 +80,9 @@ update_status ModuleCamera::Update()
 void ModuleCamera::GenerateMatrices()
 {
 
-	model = float4x4::FromTRS(float3(2.0f, 0.0f, 0.0f),
-		float4x4::RotateZ(M_PI / 4.0f),
-		float3(2.0f, 1.0f, 1.0f));
+	model = float4x4::FromTRS(float3(0.0f, 0.0f, 0.0f),
+		float4x4::RotateZ(0),
+		float3(1.0f, 1.0f, 1.0f));
 
 	float3 tempWorldRight = lookAtDirection.Normalized().Cross(alignDirection);
 	up = tempWorldRight.Cross(lookAtDirection);
