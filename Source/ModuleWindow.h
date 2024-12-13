@@ -28,12 +28,7 @@ public:
 	//The surface contained by the window
 	SDL_Surface* screen_surface = NULL;
 
-	int getWidth() const { return width; }
-	int getHeight() const { return height; }
-
 private: 
-	int width = 1280;
-	int height = 720;
 
 };
 

@@ -24,10 +24,12 @@ public:
 private:
 	void ShowConfigurationWindow(bool* open);
 	void ShowAboutWindow(bool* open);
+	void ShowGraphicsWindow(bool* open);
 
 	bool show_demo_window = false;
 	bool show_config_window = false;
 	bool show_about_window = false;
+	bool show_graphics_window = false;
 
 	int brightness = 50;
 	int width = 1280;

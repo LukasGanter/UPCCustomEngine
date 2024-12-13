@@ -1,6 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleEditor.h"
+
+#include "ModuleCamera.h"
 #include "ModuleWindow.h"
 #include "ModuleOpenGL.h"
 #include "SDL.h"
@@ -84,6 +86,9 @@ void ModuleEditor::Draw()
 			if (ImGui::MenuItem("Configuration")) {
 				show_config_window = !show_config_window;
 			}
+			if (ImGui::MenuItem("Graphics")) {
+				show_graphics_window = !show_graphics_window;
+			}
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
@@ -95,6 +100,9 @@ void ModuleEditor::Draw()
 
 	if (show_config_window)
 		ShowConfigurationWindow(&show_demo_window);
+
+	if (show_graphics_window)
+		ShowGraphicsWindow(&show_graphics_window);
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -127,4 +135,16 @@ void ModuleEditor::ShowConfigurationWindow(bool* open)
 void ModuleEditor::ShowAboutWindow(bool* open)
 {
 	//ImGui
+}
+
+void ModuleEditor::ShowGraphicsWindow(bool* open)
+{
+	if (ImGui::CollapsingHeader("Window options")) {
+		ImGui::SliderFloat("Horizontal FOV", &App->GetCamera()->horizontalFOV, 0, 180);
+		ImGui::SliderFloat("Near clipping plane", &App->GetCamera()->nearPlaneDistance, 0, App->GetCamera()->farPlaneDistance);
+		ImGui::SliderFloat("Far clipping plane", &App->GetCamera()->farPlaneDistance, App->GetCamera()->nearPlaneDistance, 1000);
+	}
+	if (ImGui::Button("Close")) {
+		show_graphics_window = false;
+	}
 }

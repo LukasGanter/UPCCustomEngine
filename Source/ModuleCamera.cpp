@@ -8,6 +8,7 @@
 #include "Geometry/Frustum.h"
 #include "ModuleInput.h"
 #include "Math/float3x3.h"
+#include "Math/MathConstants.h"
 
 ModuleCamera::ModuleCamera()
 {
@@ -92,10 +93,11 @@ void ModuleCamera::GenerateMatrices()
 	frustum.pos = location;
 	frustum.front = lookAtDirection.Normalized();
 	frustum.up = up;
-	frustum.nearPlaneDistance = 0.1f;
-	frustum.farPlaneDistance = 100.0f;
-	frustum.verticalFov = M_PI / 4.0f;
-	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * (4./3.));
+	frustum.nearPlaneDistance = nearPlaneDistance;
+	frustum.farPlaneDistance = farPlaneDistance;
+	frustum.verticalFov = atanf(tanf((horizontalFOV * (pi / 180)) / 2.f) / (16./9.)) / 0.5f;
+	//frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * (4./3.));
+	frustum.horizontalFov = horizontalFOV * (pi / 180);
 
 	right = frustum.WorldRight();
 	projection = frustum.ProjectionMatrix();
