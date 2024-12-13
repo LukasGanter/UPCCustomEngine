@@ -28,7 +28,7 @@ update_status ModuleTexture::PreUpdate()
 }
 
 // Called every draw update
-update_status ModuleTexture::Update()
+update_status ModuleTexture::Update(const float deltaTime)
 {
 	return UPDATE_CONTINUE;
 }

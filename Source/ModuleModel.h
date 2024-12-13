@@ -10,7 +10,7 @@ public:
 
 	bool Init();
 	update_status PreUpdate();
-	update_status Update();
+	update_status Update(const float deltaTime);
 	update_status PostUpdate();
 	bool CleanUp();
 

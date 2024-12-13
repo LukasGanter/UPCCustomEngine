@@ -44,7 +44,7 @@ bool Application::Init()
 	return ret;
 }
 
-update_status Application::Update()
+update_status Application::Update(const float deltaTime)
 {
 	update_status ret = UPDATE_CONTINUE;
 
@@ -52,7 +52,7 @@ update_status Application::Update()
 		ret = (*it)->PreUpdate();
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->Update();
+		ret = (*it)->Update(deltaTime);
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		ret = (*it)->PostUpdate();

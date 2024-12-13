@@ -39,7 +39,7 @@ update_status ModuleModel::PreUpdate()
 }
 
 // Called every draw update
-update_status ModuleModel::Update()
+update_status ModuleModel::Update(const float deltaTime)
 {
 	const unsigned int program = App->GetProgram()->getProgram();
 	glUseProgram(program);

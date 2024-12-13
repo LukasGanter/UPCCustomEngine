@@ -46,7 +46,7 @@ update_status ModuleEditor::PreUpdate()
 }
 
 // Called every draw update
-update_status ModuleEditor::Update()
+update_status ModuleEditor::Update(const float deltaTime)
 {
 	Draw();
 

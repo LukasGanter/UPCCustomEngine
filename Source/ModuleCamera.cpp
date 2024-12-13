@@ -72,7 +72,7 @@ update_status ModuleCamera::PreUpdate()
 }
 
 // Called every draw update
-update_status ModuleCamera::Update()
+update_status ModuleCamera::Update(const float deltaTime)
 {
 
 	return UPDATE_CONTINUE;

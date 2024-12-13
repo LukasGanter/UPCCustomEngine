@@ -1,3 +1,5 @@
+#include <iostream>
+#include <ostream>
 #include <stdlib.h>
 #include "Application.h"
 #include "ModuleOpenGL.h"
@@ -22,6 +24,10 @@ int main(int argc, char ** argv)
 {
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
+
+	const int FPS = 60;
+	const Uint64 updateTargetTickDuration = 1000 / FPS;
+	Uint64 lastUpdateTicks = 0; 
 
 	while (state != MAIN_EXIT)
 	{
@@ -51,18 +57,25 @@ int main(int argc, char ** argv)
 			break;
 
 		case MAIN_UPDATE:
-		{
-			int update_return = App->Update();
-
-			if (update_return == UPDATE_ERROR)
 			{
-				LOG("Application Update exits with error -----");
-				state = MAIN_EXIT;
-			}
+				const Uint64 currentTicks = SDL_GetTicks();
+				const Uint64 deltaTicks = currentTicks - lastUpdateTicks;
+				if (deltaTicks > updateTargetTickDuration) {
+					int update_return = App->Update(deltaTicks);
+					std::cout << deltaTicks << std::endl;
 
-			if (update_return == UPDATE_STOP)
-				state = MAIN_FINISH;
-		}
+					if (update_return == UPDATE_ERROR)
+					{
+						LOG("Application Update exits with error -----");
+						state = MAIN_EXIT;
+					}
+
+					if (update_return == UPDATE_STOP)
+						state = MAIN_FINISH;
+
+					lastUpdateTicks = currentTicks;
+				}
+			}
 			break;
 
 		case MAIN_FINISH:

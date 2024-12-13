@@ -32,7 +32,7 @@ update_status ModuleProgram::PreUpdate()
 }
 
 // Called every draw update
-update_status ModuleProgram::Update()
+update_status ModuleProgram::Update(const float deltaTime)
 {
 	return UPDATE_CONTINUE;
 }
