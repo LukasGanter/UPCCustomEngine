@@ -38,11 +38,11 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 		vertexCount = posAcc.count;
 		if (posAcc.minValues.size() == 3)
 		{
-			minPosValues = new float3(posAcc.minValues[0] * 100.0f, posAcc.minValues[1] * 100.0f, posAcc.minValues[2] * 100.0f);
+			minPosValues = new float3(posAcc.minValues[0], posAcc.minValues[1], posAcc.minValues[2]);
 		}
 		if (posAcc.maxValues.size() == 3)
 		{
-			maxPosValues = new float3(posAcc.maxValues[0] * 100.0f, posAcc.maxValues[1] * 100.0f, posAcc.maxValues[2] * 100.0f);
+			maxPosValues = new float3(posAcc.maxValues[0], posAcc.maxValues[1], posAcc.maxValues[2]);
 		}
 		SDL_assert(posAcc.type == TINYGLTF_TYPE_VEC3);
 		SDL_assert(posAcc.componentType == GL_FLOAT);
@@ -72,7 +72,7 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 			Vertex* ptr = reinterpret_cast<Vertex*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 			for (size_t i = 0; i < vertexCount; ++i)
 			{
-				const float3 pos = *reinterpret_cast<const float3*>(bufferPos) * 100.;
+				const float3 pos = *reinterpret_cast<const float3*>(bufferPos);
 				const float2 texCoord = *reinterpret_cast<const float2*>(texCoordbufferPos);
 				ptr[i] = {pos, texCoord};
 				bufferPos += posView.byteStride == 0 ? sizeof(float) * 3 : posView.byteStride;

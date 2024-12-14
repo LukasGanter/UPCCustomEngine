@@ -33,16 +33,19 @@ bool ModuleCamera::Init()
 
 update_status ModuleCamera::PreUpdate()
 {
-	
+	const bool shouldOrbit = App->GetInput()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT &&
+		App->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT;
+
 	if (orbiting)
 	{
-		if (App->GetInput()->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
-			StopOrbiting();
-		}
-	} else {
-		if (App->GetInput()->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
+		orbiting = shouldOrbit;
+	} else
+	{
+		if (shouldOrbit)
+		{
 			StartOrbiting();
 		}
+		
 		if (App->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) {
 			FocusMesh();
 		}

@@ -164,8 +164,8 @@ void ModuleEditor::ShowGraphicsWindow(bool* open)
 {
 	if (ImGui::CollapsingHeader("Window options")) {
 		ImGui::SliderFloat("Horizontal FOV", &App->GetCamera()->horizontalFOV, 0, 180);
-		ImGui::SliderFloat("Near clipping plane", &App->GetCamera()->nearPlaneDistance, 0, App->GetCamera()->farPlaneDistance);
-		ImGui::SliderFloat("Far clipping plane", &App->GetCamera()->farPlaneDistance, App->GetCamera()->nearPlaneDistance, 1000);
+		ImGui::SliderFloat("Near clipping plane", &App->GetCamera()->nearPlaneDistance, 0.001f, App->GetCamera()->farPlaneDistance);
+		ImGui::SliderFloat("Far clipping plane", &App->GetCamera()->farPlaneDistance, App->GetCamera()->nearPlaneDistance + 0.001f, 1000);
 	}
 	if (ImGui::Button("Close")) {
 		show_graphics_window = false;
