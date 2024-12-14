@@ -82,6 +82,7 @@ update_status ModuleInput::PreUpdate()
 			mouse_buttons[i] = KEY_IDLE;
 	}
 
+	mouseWheelMotion = 0;
 	while (SDL_PollEvent(&event) != 0)
 	{
 
@@ -126,6 +127,9 @@ update_status ModuleInput::PreUpdate()
 			mouse_motion.y = event.motion.yrel / 2;
 			mouse.x = event.motion.x / 2;
 			mouse.y = event.motion.y / 2;
+			break;
+		case SDL_MOUSEWHEEL:
+			mouseWheelMotion = event.wheel.y;
 			break;
 		case SDL_DROPFILE:
 			char* fullPath = event.drop.file;

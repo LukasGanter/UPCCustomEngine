@@ -54,6 +54,8 @@ update_status ModuleCamera::PreUpdate()
 		if (App->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 			speed *= 3;
 		}
+
+		location += lookAtDirection * speed * App->GetInput()->GetMouseWheel();
 		
 		// Move if left mouse is pressed and mouse is tracked
 		if (App->GetInput()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
