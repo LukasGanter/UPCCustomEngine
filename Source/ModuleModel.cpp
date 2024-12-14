@@ -64,7 +64,6 @@ update_status ModuleModel::PostUpdate()
 // Called before quitting
 bool ModuleModel::CleanUp()
 {
-	delete loadedModel;
 	return true;
 }
 
