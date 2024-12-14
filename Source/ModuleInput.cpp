@@ -3,6 +3,7 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 
+#include "ModuleModel.h"
 #include "SDL/include/SDL.h"
 #include "imgui/imgui_impl_sdl2.h"
 
@@ -125,6 +126,12 @@ update_status ModuleInput::PreUpdate()
 			mouse_motion.y = event.motion.yrel / 2;
 			mouse.x = event.motion.x / 2;
 			mouse.y = event.motion.y / 2;
+			break;
+		case SDL_DROPFILE:
+			char* fullPath = event.drop.file;
+			LOG("Dropped file: %s", fullPath)
+			App->GetModel()->LoadModel(fullPath);
+			SDL_free(fullPath);
 			break;
 		}
 	}

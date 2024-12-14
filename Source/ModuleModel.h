@@ -14,6 +14,8 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	void LoadModel(const std::string& filePath);
+
 	EngineModel* GetLoadedModel() const { return loadedModel;}
 
 private:
