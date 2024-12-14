@@ -116,8 +116,8 @@ void ModuleCamera::StartOrbiting()
 	currentOrbitingRads = 0;
 	target = GetCenterOfMesh();
 
-	location = float3(orbitingRadius, GetMaxHeightForMeshView(), 0);
-	lookAtDirection = float3(-1, 0, 0);
+	location = float3(0, GetMaxHeightForMeshView(), orbitingRadius);
+	lookAtDirection = float3(0, 0, -1);
 	
 	orbiting = true;
 }
@@ -137,7 +137,7 @@ float ModuleCamera::GetDistanceForWholeMeshView() const
 
 	if (minPos == nullptr || maxPos == nullptr) return 1;
 
-	return Max(minPos->Length(), maxPos->Length());
+	return Max(minPos->Length(), maxPos->Length()) + 0.1;
 }
 
 float ModuleCamera::GetCenterHeightForWholeMeshView() const
@@ -180,8 +180,8 @@ float3 ModuleCamera::GetCenterOfMesh() const
 
 void ModuleCamera::FocusMesh()
 {
-	location = float3(GetDistanceForWholeMeshView(), GetCenterHeightForWholeMeshView(), 0);
-	lookAtDirection = float3(-1, 0, 0);
+	location = float3(0, GetCenterHeightForWholeMeshView(), GetDistanceForWholeMeshView());
+	lookAtDirection = float3(0, 0, -1);
 }
 
 void ModuleCamera::GenerateMatrices()

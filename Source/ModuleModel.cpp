@@ -85,6 +85,7 @@ void ModuleModel::LoadModel(const std::string& filePath)
 	loadedModel = new EngineModel();
 	const unsigned long long splitPositionFileName = filePath.find_last_of("\\");
 	loadedModel->Load(filePath.substr(0, splitPositionFileName + 1), filePath.substr(splitPositionFileName + 1, filePath.length()));
+	App->GetCamera()->FocusMesh();
 }
 
 void ModuleModel::LoadTexture(const std::string& filePath)
