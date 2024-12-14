@@ -11,6 +11,9 @@ ModuleTexture::ModuleTexture()
 // Destructor
 ModuleTexture::~ModuleTexture()
 {
+	for (const auto& texture : meshTextures)
+		glDeleteTextures(1, &texture);
+	meshTextures.clear();
 }
 
 // Called before render is available
@@ -44,8 +47,12 @@ bool ModuleTexture::CleanUp()
 	return true;
 }
 
-GLuint ModuleTexture::LoadTexture(const std::string& texturePath) const
+GLuint ModuleTexture::LoadTexture(const std::string& texturePath)
 {
+	for (const auto& texture : meshTextures)
+		glDeleteTextures(1, &texture);
+	meshTextures.clear();
+	
 	// TODO Only works for ASCII strings
 	std::wstring widestr = std::wstring(texturePath.begin(), texturePath.end());
 	const wchar_t* path = widestr.c_str();
@@ -102,7 +109,19 @@ GLuint ModuleTexture::LoadTexture(const std::string& texturePath) const
 		0, format, type, image->GetPixels());
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glActiveTexture(GL_TEXTURE0);	// TODO Always Texture0 can not be correct
+
+	meshTextures.push_back(texture);
 	
 	return texture;
+}
+
+const int ModuleTexture::getLoadedTextureID(const int Index) const
+{
+	if (Index >= 0 && Index < meshTextures.size())
+	{
+		return meshTextures[Index];
+	}
+
+	return -1;
 }
 

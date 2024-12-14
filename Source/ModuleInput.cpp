@@ -134,7 +134,7 @@ update_status ModuleInput::PreUpdate()
 		case SDL_DROPFILE:
 			char* fullPath = event.drop.file;
 			LOG("Dropped file: %s", fullPath)
-			App->GetModel()->LoadModel(fullPath);
+			App->GetModel()->LoadAssets(fullPath);
 			SDL_free(fullPath);
 			break;
 		}

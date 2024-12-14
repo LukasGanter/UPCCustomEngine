@@ -22,5 +22,10 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	GLuint LoadTexture(const std::string& texturePath) const;
+	GLuint LoadTexture(const std::string& texturePath);
+
+	const int getLoadedTextureID(const int Index) const;
+	
+private:
+	std::vector<unsigned> meshTextures;
 };

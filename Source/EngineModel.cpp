@@ -20,10 +20,6 @@ EngineModel::~EngineModel()
 	for (const auto& mesh : meshes)
 		delete mesh;
 	meshes.clear();
-
-	for (const auto& texture : meshTextures)
-		glDeleteTextures(1, &texture);
-	meshTextures.clear();
 	
 	delete minPosValues;
 	delete maxPosValues;
@@ -82,21 +78,19 @@ void EngineModel::Load(const std::string& modelPath, const std::string& modelNam
 void EngineModel::Render() const
 {
 	for (const auto& mesh : meshes)
-		mesh->Draw(meshTextures);
+		mesh->Draw();
 }
 
 void EngineModel::LoadMaterials(const std::string& modelPath, const tinygltf::Model& srcModel)
 {
 	for(const auto& srcMaterial : srcModel.materials)
 	{
-		unsigned int textureId = 0;
 		if(srcMaterial.pbrMetallicRoughness.baseColorTexture.index >= 0)
 		{
 			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
 			const tinygltf::Image& image = srcModel.images[texture.source];
-			textureId = App->GetTexture()->LoadTexture(modelPath + image.uri);	
+			App->GetTexture()->LoadTexture(modelPath + image.uri);	
 		}
-		meshTextures.push_back(textureId);
 	}
 }
 

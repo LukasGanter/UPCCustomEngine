@@ -27,7 +27,7 @@ public:
 
 	void Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
 
-	void Draw(const std::vector<unsigned>& textures);
+	void Draw();
 
 	const float3* GetMinPosValues() const { return minPosValues; }
 	const float3* GetMaxPosValues() const { return maxPosValues; }

@@ -21,8 +21,6 @@ private:
 
 	//std::vector<std::unique_ptr<EngineMesh>> meshes;
 	std::vector<EngineMesh*> meshes;
-	std::vector<unsigned> meshTextures;
-
 
 	float3* minPosValues = nullptr;
 	float3* maxPosValues = nullptr;

@@ -21,7 +21,7 @@ enum update_status
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "Custom game engine"
-#define FPS 1000
+#define FPS 60
 #define LOG_MSG_BUFFER_SIZE 40
 
 extern int logMsgBufferPtr;

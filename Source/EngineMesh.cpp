@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleProgram.h"
 #include "EngineMesh.h"
+
+#include "ModuleTexture.h"
 #include "SDL.h"
 #include "GL/glew.h"
 #include "Math/float3.h"
@@ -146,12 +148,13 @@ void EngineMesh::CreateVAO()
 	glBindVertexArray(0);
 }
 
-void EngineMesh::Draw(const std::vector<unsigned>& textures)
+void EngineMesh::Draw()
 {
-	if (materialIndex != -1 && textures.size() > materialIndex)
+	const int loadedTexture = App->GetTexture()->getLoadedTextureID(materialIndex);
+	if (loadedTexture != -1)
 	{
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textures[materialIndex]);
+		glBindTexture(GL_TEXTURE_2D, loadedTexture);
 	}
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);

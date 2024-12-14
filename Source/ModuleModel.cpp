@@ -10,6 +10,7 @@
 #define TINYGLTF_IMPLEMENTATION /* Only in one of the includes */
 #include <GL/glew.h>
 
+#include "ModuleTexture.h"
 #include "tinyGltf/tiny_gltf.h"
 
 
@@ -67,11 +68,27 @@ bool ModuleModel::CleanUp()
 	return true;
 }
 
+void ModuleModel::LoadAssets(const std::string& filePath)
+{
+	if (filePath.compare(filePath.size()-5, 5, ".gltf") == 0)
+	{
+		LoadModel(filePath);
+	} else if (filePath.compare(filePath.size()-4, 4, ".png") == 0 || filePath.compare(filePath.size()-4, 4, ".dds") == 0)
+	{
+		LoadTexture(filePath);
+	}
+}
+
 void ModuleModel::LoadModel(const std::string& filePath)
 {
 	delete loadedModel;
 	loadedModel = new EngineModel();
 	const unsigned long long splitPositionFileName = filePath.find_last_of("\\");
 	loadedModel->Load(filePath.substr(0, splitPositionFileName + 1), filePath.substr(splitPositionFileName + 1, filePath.length()));
+}
+
+void ModuleModel::LoadTexture(const std::string& filePath)
+{
+	App->GetTexture()->LoadTexture(filePath);	
 }
 

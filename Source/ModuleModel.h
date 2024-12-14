@@ -14,11 +14,14 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	void LoadModel(const std::string& filePath);
-
+	void LoadAssets(const std::string& filePath);
 	EngineModel* GetLoadedModel() const { return loadedModel;}
 
 private:
+
+	void LoadModel(const std::string& filePath);
+
+	void LoadTexture(const std::string& filePath);
 
 	EngineModel* loadedModel = nullptr;
 };
