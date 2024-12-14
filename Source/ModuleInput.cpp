@@ -87,6 +87,7 @@ update_status ModuleInput::PreUpdate()
 	{
 
 		ImGui_ImplSDL2_ProcessEvent(&event);
+		ImGuiIO& io = ImGui::GetIO();
 
 		switch (event.type)
 		{
@@ -115,21 +116,33 @@ update_status ModuleInput::PreUpdate()
 			break;
 
 		case SDL_MOUSEBUTTONDOWN:
-			mouse_buttons[event.button.button - 1] = KEY_DOWN;
+			if (!io.WantCaptureMouse)
+			{
+				mouse_buttons[event.button.button - 1] = KEY_DOWN;
+			}
 			break;
 
 		case SDL_MOUSEBUTTONUP:
-			mouse_buttons[event.button.button - 1] = KEY_UP;
+			if (!io.WantCaptureMouse)
+			{
+				mouse_buttons[event.button.button - 1] = KEY_UP;
+			}
 			break;
 
 		case SDL_MOUSEMOTION:
-			mouse_motion.x = event.motion.xrel / 2;
-			mouse_motion.y = event.motion.yrel / 2;
-			mouse.x = event.motion.x / 2;
-			mouse.y = event.motion.y / 2;
+			if (!io.WantCaptureMouse)
+			{
+				mouse_motion.x = event.motion.xrel / 2;
+				mouse_motion.y = event.motion.yrel / 2;
+				mouse.x = event.motion.x / 2;
+				mouse.y = event.motion.y / 2;
+			}
 			break;
 		case SDL_MOUSEWHEEL:
-			mouseWheelMotion = event.wheel.y;
+			if (!io.WantCaptureMouse)
+			{
+				mouseWheelMotion = event.wheel.y;
+			}
 			break;
 		case SDL_DROPFILE:
 			char* fullPath = event.drop.file;
