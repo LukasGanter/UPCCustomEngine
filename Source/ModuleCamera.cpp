@@ -27,7 +27,6 @@ ModuleCamera::~ModuleCamera()
 // Called before render is available
 bool ModuleCamera::Init()
 {
-
 	return true;
 }
 
@@ -201,7 +200,7 @@ void ModuleCamera::GenerateMatrices()
 	frustum.up = up;
 	frustum.nearPlaneDistance = nearPlaneDistance;
 	frustum.farPlaneDistance = farPlaneDistance;
-	frustum.verticalFov = atanf(tanf((horizontalFOV * (pi / 180)) / 2.f) / (16./9.)) / 0.5f;
+	frustum.verticalFov = atanf(tanf((horizontalFOV * (pi / 180)) / 2.f) / App->GetWindow()->getActiveWindowRatio()) / 0.5f;
 	//frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * (4./3.));
 	frustum.horizontalFov = horizontalFOV * (pi / 180);
 

@@ -28,8 +28,17 @@ public:
 	//The surface contained by the window
 	SDL_Surface* screen_surface = NULL;
 
+	void UpdateWindowWidth(const int newWidth);
+	void UpdateWindowHeight(const int newHeight);
+
+	const unsigned int getActiveWindowWidth() const { return activeWindowWidth; }
+	const unsigned int getActiveWindowHeight() const { return activeWindowWidth; }
+	const float getActiveWindowRatio() const { return (float)activeWindowWidth / (float)activeWindowHeight; }
+
 private: 
 
+	unsigned int activeWindowWidth = SCREEN_WIDTH;
+	unsigned int activeWindowHeight;
 };
 
 #endif // __ModuleWindow_H__
