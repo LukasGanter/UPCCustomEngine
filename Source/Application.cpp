@@ -16,15 +16,15 @@ using namespace std;
 Application::Application()
 {
 	// Order matters: they will Init/start/update in this order
-	modules.push_back(window = new ModuleWindow());
-	modules.push_back(render = new ModuleOpenGL());
-	modules.push_back(program = new ModuleProgram());
-	modules.push_back(input = new ModuleInput());
-	modules.push_back(texture = new ModuleTexture());
-	modules.push_back(debugDraw = new ModuleDebugDraw());
-	modules.push_back(camera = new ModuleCamera());
-	modules.push_back(model = new ModuleModel());
-	modules.push_back(editor = new ModuleEditor());
+	modules.push_back(windowModule = new ModuleWindow());
+	modules.push_back(renderModule = new ModuleOpenGL());
+	modules.push_back(programModule = new ModuleProgram());
+	modules.push_back(inputModule = new ModuleInput());
+	modules.push_back(textureModule = new ModuleTexture());
+	modules.push_back(debugDrawModule = new ModuleDebugDraw());
+	modules.push_back(cameraModule = new ModuleCamera());
+	modules.push_back(modelModule = new ModuleModel());
+	modules.push_back(editorModule = new ModuleEditor());
 }
 
 Application::~Application()

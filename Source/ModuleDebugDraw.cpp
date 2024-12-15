@@ -617,9 +617,9 @@ update_status  ModuleDebugDraw::Update(const float deltaTime)
 
     int width = 0;
     int height = 0;
-    SDL_GetWindowSize(App->GetWindow()->window, &width, &height);
+    SDL_GetWindowSize(App->GetWindowModule()->window, &width, &height);
 
-    Draw(App->GetCamera()->view, App->GetCamera()->projection, width, height);
+    Draw(App->GetCameraModule()->view, App->GetCameraModule()->projection, width, height);
 
 	return UPDATE_CONTINUE;
 }

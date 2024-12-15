@@ -30,7 +30,7 @@ bool ModuleEditor::Init()
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
-	ImGui_ImplSDL2_InitForOpenGL(App->GetWindow()->window, App->GetOpenGL()->GetContext());
+	ImGui_ImplSDL2_InitForOpenGL(App->GetWindowModule()->window, App->GetOpenGLModule()->GetContext());
 	ImGui_ImplOpenGL3_Init("#version 460");
 
 	deltaTickBuffer = std::vector<float>( FPS_TICK_BUFFER_SIZE);
@@ -149,9 +149,9 @@ void ModuleEditor::ShowAboutWindow()
 void ModuleEditor::ShowGraphicsWindow()
 {
 	ImGui::Begin("Graphic settings");
-	ImGui::SliderFloat("Horizontal FOV", &App->GetCamera()->horizontalFOV, 0, 180);
-	ImGui::SliderFloat("Near clipping plane", &App->GetCamera()->nearPlaneDistance, 0.001f, App->GetCamera()->farPlaneDistance);
-	ImGui::SliderFloat("Far clipping plane", &App->GetCamera()->farPlaneDistance, App->GetCamera()->nearPlaneDistance + 0.001f, 1000);
+	ImGui::SliderFloat("Horizontal FOV", &App->GetCameraModule()->horizontalFOV, 0, 180);
+	ImGui::SliderFloat("Near clipping plane", &App->GetCameraModule()->nearPlaneDistance, 0.001f, App->GetCameraModule()->farPlaneDistance);
+	ImGui::SliderFloat("Far clipping plane", &App->GetCameraModule()->farPlaneDistance, App->GetCameraModule()->nearPlaneDistance + 0.001f, 1000);
 	if (ImGui::Button("Close")) {
 		show_graphics_window = false;
 	}
@@ -165,7 +165,7 @@ void ModuleEditor::ShowApplicationsWindow()
 	ImGui::PlotHistogram("##framerate", &fpsBuffer[0], fpsBuffer.size(), tickBufferPtr, "Framerate", 0.0f, 100.f, ImVec2(310, 100));
 	ImGui::PlotHistogram("##milliseconds", &deltaTickBuffer[0], deltaTickBuffer.size(), tickBufferPtr, "Milliseconds", 0.0f, 40.f, ImVec2(310, 100));
 	
-	App->GetOpenGL()->RenderUI();
+	App->GetOpenGLModule()->RenderUI();
 	
 	if (ImGui::Button("Close")) {
 		show_application_window = false;
@@ -198,6 +198,6 @@ void ModuleEditor::ShowLogWindow()
 void ModuleEditor::ShowPropertiesWindow()
 {
 	ImGui::Begin("Properties", &show_properties_window, ImGuiWindowFlags_MenuBar);
-	App->GetModel()->RenderUI();
+	App->GetModelModule()->RenderUI();
 	ImGui::End();
 }

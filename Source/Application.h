@@ -29,15 +29,15 @@ public:
 	update_status Update(const float deltaTime);
 	bool CleanUp();
 
-    ModuleOpenGL* GetOpenGL() const { return render; }
-    ModuleWindow* GetWindow() const { return window; }
-    ModuleInput*  GetInput() const { return input; }
-    ModuleProgram* GetProgram() const { return program; }
-    ModuleDebugDraw* GetDebugDraw() const { return debugDraw; }
-    ModuleCamera* GetCamera() const { return camera; }
-    ModuleEditor* GetEditor() const { return editor; }
-    ModuleTexture* GetTexture() const { return texture; }
-    ModuleModel* GetModel() const { return model; }
+    ModuleOpenGL* GetOpenGLModule() const { return renderModule; }
+    ModuleWindow* GetWindowModule() const { return windowModule; }
+    ModuleInput*  GetInputModule() const { return inputModule; }
+    ModuleProgram* GetProgramModule() const { return programModule; }
+    ModuleDebugDraw* GetDebugDrawModule() const { return debugDrawModule; }
+    ModuleCamera* GetCameraModule() const { return cameraModule; }
+    ModuleEditor* GetEditorModule() const { return editorModule; }
+    ModuleTexture* GetTextureModule() const { return textureModule; }
+    ModuleModel* GetModelModule() const { return modelModule; }
 
 	void AddLogMessage(const char* message);
 
@@ -46,15 +46,15 @@ public:
 
 private:
 
-    ModuleOpenGL* render = nullptr;
-    ModuleWindow* window = nullptr;
-    ModuleInput* input = nullptr;
-    ModuleProgram* program = nullptr;
-    ModuleDebugDraw* debugDraw = nullptr;
-    ModuleCamera* camera = nullptr;
-    ModuleEditor* editor = nullptr;
-    ModuleTexture* texture = nullptr;
-    ModuleModel* model = nullptr;
+    ModuleOpenGL* renderModule = nullptr;
+    ModuleWindow* windowModule = nullptr;
+    ModuleInput* inputModule = nullptr;
+    ModuleProgram* programModule = nullptr;
+    ModuleDebugDraw* debugDrawModule = nullptr;
+    ModuleCamera* cameraModule = nullptr;
+    ModuleEditor* editorModule = nullptr;
+    ModuleTexture* textureModule = nullptr;
+    ModuleModel* modelModule = nullptr;
 
 
     std::list<Module*> modules;

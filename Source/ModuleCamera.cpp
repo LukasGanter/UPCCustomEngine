@@ -21,8 +21,8 @@ ModuleCamera::~ModuleCamera()
 
 update_status ModuleCamera::PreUpdate()
 {
-	const bool shouldOrbit = App->GetInput()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT &&
-		App->GetInput()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT;
+	const bool shouldOrbit = App->GetInputModule()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT &&
+		App->GetInputModule()->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT;
 
 	if (orbiting)
 	{
@@ -34,46 +34,46 @@ update_status ModuleCamera::PreUpdate()
 			StartOrbiting();
 		}
 		
-		if (App->GetInput()->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) {
+		if (App->GetInputModule()->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) {
 			FocusMesh();
 		}
 		
 		float speed = 0.1f;
-		if (App->GetInput()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
+		if (App->GetInputModule()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 			speed *= 3;
 		}
 
-		location += lookAtDirection * speed * App->GetInput()->GetMouseWheel();
+		location += lookAtDirection * speed * App->GetInputModule()->GetMouseWheel();
 		
 		// Move if left mouse is pressed and mouse is tracked
-		if (App->GetInput()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+		if (App->GetInputModule()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 			lookAtDirection = lookAtDirection *
-				float3x3::RotateAxisAngle(right, App->GetInput()->GetMouseMotion().y / 30.);
+				float3x3::RotateAxisAngle(right, App->GetInputModule()->GetMouseMotion().y / 30.);
 		
 			lookAtDirection = lookAtDirection *
-				float3x3::RotateAxisAngle(alignDirection, App->GetInput()->GetMouseMotion().x / 30.);
+				float3x3::RotateAxisAngle(alignDirection, App->GetInputModule()->GetMouseMotion().x / 30.);
 		}
 	
-		if (App->GetInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+		if (App->GetInputModule()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 			location += lookAtDirection * speed;
 		}
 	
-		if (App->GetInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+		if (App->GetInputModule()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			location -= lookAtDirection * speed;
 		}
 
-		if (App->GetInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		if (App->GetInputModule()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			location -= right * speed;
 		}
 	
-		if (App->GetInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		if (App->GetInputModule()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			location += right * speed;
 		}
 
-		if (App->GetInput()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) {
+		if (App->GetInputModule()->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) {
 			location.y += speed;
 		}
-		else if (App->GetInput()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) {
+		else if (App->GetInputModule()->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) {
 			location.y -= speed;
 		}
 	}
@@ -117,7 +117,7 @@ void ModuleCamera::StopOrbiting()
 
 float ModuleCamera::GetDistanceForWholeMeshView()
 {
-	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
+	EngineModel* loadedModel = App->GetModelModule()->GetLoadedModel();
 	if (loadedModel == nullptr) return 1;
 
 	const float3* minPos = loadedModel->getMinPosValues();
@@ -130,7 +130,7 @@ float ModuleCamera::GetDistanceForWholeMeshView()
 
 float ModuleCamera::GetCenterHeightForWholeMeshView()
 {
-	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
+	EngineModel* loadedModel = App->GetModelModule()->GetLoadedModel();
 	if (loadedModel == nullptr) return 1;
 
 	const float3* minPos = loadedModel->getMinPosValues();
@@ -143,7 +143,7 @@ float ModuleCamera::GetCenterHeightForWholeMeshView()
 
 float ModuleCamera::GetMaxHeightForMeshView()
 {
-	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
+	EngineModel* loadedModel = App->GetModelModule()->GetLoadedModel();
 	if (loadedModel == nullptr) return 1;
 	
 	const float3* maxPos = loadedModel->getMaxPosValues();
@@ -155,7 +155,7 @@ float ModuleCamera::GetMaxHeightForMeshView()
 
 float3 ModuleCamera::GetCenterOfMesh()
 {
-	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
+	EngineModel* loadedModel = App->GetModelModule()->GetLoadedModel();
 	if (loadedModel == nullptr) return float3::zero;
 
 	const float3* minPos = loadedModel->getMinPosValues();
@@ -189,7 +189,7 @@ void ModuleCamera::GenerateMatrices()
 	frustum.up = up;
 	frustum.nearPlaneDistance = nearPlaneDistance;
 	frustum.farPlaneDistance = farPlaneDistance;
-	frustum.verticalFov = atanf(tanf((horizontalFOV * (pi / 180)) / 2.f) / App->GetWindow()->getActiveWindowRatio()) / 0.5f;
+	frustum.verticalFov = atanf(tanf((horizontalFOV * (pi / 180)) / 2.f) / App->GetWindowModule()->getActiveWindowRatio()) / 0.5f;
 	//frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * (4./3.));
 	frustum.horizontalFov = horizontalFOV * (pi / 180);
 

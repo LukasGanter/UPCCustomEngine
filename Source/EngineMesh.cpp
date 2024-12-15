@@ -159,7 +159,7 @@ void EngineMesh::CreateVAO()
 
 void EngineMesh::Draw() const
 {
-	const int loadedTexture = App->GetTexture()->getLoadedTextureID();
+	const int loadedTexture = App->GetTextureModule()->getLoadedTextureID();
 	if (loadedTexture != -1)
 	{
 		glActiveTexture(GL_TEXTURE0);

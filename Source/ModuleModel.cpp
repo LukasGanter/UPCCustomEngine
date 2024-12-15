@@ -36,12 +36,12 @@ bool ModuleModel::Init()
 // Called every draw update
 update_status ModuleModel::Update(const float deltaTime)
 {
-	const unsigned int program = App->GetProgram()->getProgram();
+	const unsigned int program = App->GetProgramModule()->getProgram();
 	glUseProgram(program);
 	
-	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &App->GetCamera()->model[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &App->GetCamera()->view[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &App->GetCamera()->projection[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &App->GetCameraModule()->model[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &App->GetCameraModule()->view[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &App->GetCameraModule()->projection[0][0]);
 	
 	if (loadedModel != nullptr) {
 		loadedModel->Render();
@@ -75,11 +75,11 @@ void ModuleModel::LoadModel(const std::string& filePath)
 	loadedModel = new EngineModel();
 	const unsigned long long splitPositionFileName = filePath.find_last_of('\\');
 	loadedModel->Load(filePath.substr(0, splitPositionFileName + 1), filePath.substr(splitPositionFileName + 1, filePath.length()));
-	App->GetCamera()->FocusMesh();
+	App->GetCameraModule()->FocusMesh();
 }
 
 void ModuleModel::LoadTexture(const std::string& filePath)
 {
-	App->GetTexture()->LoadTexture(filePath);	
+	App->GetTextureModule()->LoadTexture(filePath);	
 }
 

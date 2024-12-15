@@ -112,8 +112,8 @@ update_status ModuleInput::PreUpdate()
 				windowEvents[WE_SHOW] = true;
 				break;
 			case SDL_WINDOWEVENT_RESIZED:
-				App->GetWindow()->UpdateWindowWidth(event.window.data1);
-				App->GetWindow()->UpdateWindowHeight(event.window.data2);
+				App->GetWindowModule()->UpdateWindowWidth(event.window.data1);
+				App->GetWindowModule()->UpdateWindowHeight(event.window.data2);
 				break;
 			}
 			break;
@@ -150,7 +150,7 @@ update_status ModuleInput::PreUpdate()
 		case SDL_DROPFILE:
 			char* fullPath = event.drop.file;
 			LOG("Dropped file: %s", fullPath)
-			App->GetModel()->LoadAssets(fullPath);
+			App->GetModelModule()->LoadAssets(fullPath);
 			SDL_free(fullPath);
 			break;
 		}

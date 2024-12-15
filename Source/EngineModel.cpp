@@ -88,7 +88,7 @@ void EngineModel::RenderUI() const
 			mesh->RenderUI();
 			ImGui::Spacing();
 	}
-	App->GetTexture()->RenderUI();
+	App->GetTextureModule()->RenderUI();
 	
 }
 
@@ -100,7 +100,7 @@ void EngineModel::LoadMaterials(const std::string& modelPath, const tinygltf::Mo
 		{
 			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
 			const tinygltf::Image& image = srcModel.images[texture.source];
-			App->GetTexture()->LoadTexture(modelPath + image.uri);	
+			App->GetTextureModule()->LoadTexture(modelPath + image.uri);	
 		}
 	}
 }
