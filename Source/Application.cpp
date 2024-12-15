@@ -33,7 +33,11 @@ Application::~Application()
         delete *it;
     }
 	modules.clear();
-	
+
+	for (std::string* message : logMsgBuffer)
+	{
+		delete message;
+	}
 	logMsgBuffer.clear();
 }
 
@@ -71,4 +75,18 @@ bool Application::CleanUp()
 		ret = (*it)->CleanUp();
 
 	return ret;
+}
+
+void Application::AddLogMessage(const char* message)
+{
+	if (logMsgBufferPtr >= LOG_MSG_BUFFER_SIZE)
+	{
+		logMsgBufferPtr = 0;
+	}
+	if (logMsgBuffer[App->logMsgBufferPtr] != nullptr )
+	{
+		delete logMsgBuffer[App->logMsgBufferPtr];
+	}
+	logMsgBuffer[App->logMsgBufferPtr] = new std::string(message);
+	logMsgBufferPtr++;
 }

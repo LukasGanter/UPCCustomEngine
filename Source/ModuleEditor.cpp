@@ -202,10 +202,9 @@ void ModuleEditor::ShowLogWindow()
 		{
 			workingPtr = 0;
 		}
-		const char* message = App->logMsgBuffer[workingPtr];
-		if (message != nullptr)
+		if (App->logMsgBuffer[workingPtr] != nullptr)
 		{
-			ImGui::Text(message);
+			ImGui::Text(App->logMsgBuffer[workingPtr]->c_str());
 		}
 		workingPtr++;
 	}

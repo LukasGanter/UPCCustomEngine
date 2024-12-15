@@ -1,6 +1,8 @@
 #pragma once
 
 #include<list>
+#include <string>
+
 #include "Globals.h"
 #include "Module.h"
 
@@ -36,8 +38,10 @@ public:
     ModuleTexture* GetTexture() const { return texture; }
     ModuleModel* GetModel() const { return model; }
 
+	void AddLogMessage(const char* message);
+
 	int logMsgBufferPtr = 0;
-	std::vector<char*> logMsgBuffer = std::vector<char*>(LOG_MSG_BUFFER_SIZE, nullptr);
+	std::vector<std::string*> logMsgBuffer = std::vector<std::string*>(LOG_MSG_BUFFER_SIZE, nullptr);
 
 private:
 
