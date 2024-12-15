@@ -51,7 +51,9 @@ void EngineModel::Load(const std::string& newModelPath, const std::string& newMo
 					minPosValues = new float3(*meshMinPosValues);
 				} else
 				{
-					minPosValues = new float3(Min(*minPosValues, *meshMinPosValues));
+					float3* newMinPosValues = new float3(Min(*minPosValues, *meshMinPosValues));
+					delete minPosValues;
+					minPosValues = newMinPosValues;
 				}
 				
 			}
@@ -64,7 +66,9 @@ void EngineModel::Load(const std::string& newModelPath, const std::string& newMo
 					maxPosValues = new float3(*meshMaxPosValues);
 				} else
 				{
-					maxPosValues = new float3(Max(*maxPosValues, *meshMaxPosValues));
+					float3* newMaxPosValues = new float3(Max(*maxPosValues, *meshMaxPosValues));
+					delete maxPosValues;
+					maxPosValues = newMaxPosValues;
 				}
 				
 			}

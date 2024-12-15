@@ -1,1 +1,35 @@
-﻿  Engine.vcxproj -> C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\x64\Debug\Engine.exe
+﻿  EngineMesh.cpp
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,90): warning C4244: "Argument": Konvertierung von "const _Ty" in "float", möglicher Datenverlust
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,90): warning C4244:         with
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,90): warning C4244:         [
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,90): warning C4244:             _Ty=double
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,90): warning C4244:         ]
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,69): warning C4244: "Argument": Konvertierung von "const _Ty" in "float", möglicher Datenverlust
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,69): warning C4244:         with
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,69): warning C4244:         [
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,69): warning C4244:             _Ty=double
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,69): warning C4244:         ]
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,48): warning C4244: "Argument": Konvertierung von "const _Ty" in "float", möglicher Datenverlust
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,48): warning C4244:         with
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,48): warning C4244:         [
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,48): warning C4244:             _Ty=double
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(48,48): warning C4244:         ]
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,90): warning C4244: "Argument": Konvertierung von "const _Ty" in "float", möglicher Datenverlust
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,90): warning C4244:         with
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,90): warning C4244:         [
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,90): warning C4244:             _Ty=double
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,90): warning C4244:         ]
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,69): warning C4244: "Argument": Konvertierung von "const _Ty" in "float", möglicher Datenverlust
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,69): warning C4244:         with
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,69): warning C4244:         [
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,69): warning C4244:             _Ty=double
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,69): warning C4244:         ]
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,48): warning C4244: "Argument": Konvertierung von "const _Ty" in "float", möglicher Datenverlust
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,48): warning C4244:         with
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,48): warning C4244:         [
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,48): warning C4244:             _Ty=double
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(53,48): warning C4244:         ]
+C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\EngineMesh.cpp(171,31): warning C4267: "Argument": Konvertierung von "size_t" nach "GLsizei", Datenverlust möglich
+  EngineModel.cpp
+  Code wird generiert...
+  Engine.vcxproj -> C:\Users\lukas\Documents\Projekte\UPC\upcpersonalengine\Source\x64\Debug\Engine.exe

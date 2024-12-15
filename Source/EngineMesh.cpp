@@ -44,10 +44,12 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 		vertexCount = posAcc.count;
 		if (posAcc.minValues.size() == 3)
 		{
+			delete minPosValues;
 			minPosValues = new float3(posAcc.minValues[0], posAcc.minValues[1], posAcc.minValues[2]);
 		}
 		if (posAcc.maxValues.size() == 3)
 		{
+			delete maxPosValues;
 			maxPosValues = new float3(posAcc.maxValues[0], posAcc.maxValues[1], posAcc.maxValues[2]);
 		}
 		SDL_assert(posAcc.type == TINYGLTF_TYPE_VEC3);
