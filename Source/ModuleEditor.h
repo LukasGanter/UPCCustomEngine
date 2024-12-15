@@ -11,13 +11,11 @@ class ModuleEditor : public Module
 {
 public:
 	ModuleEditor();
-	~ModuleEditor();
+	~ModuleEditor() override;
 
-	bool Init();
-	update_status PreUpdate();
-	update_status Update(const float deltaTime);
-	update_status PostUpdate();
-	bool CleanUp();
+	bool Init() override;
+	update_status Update(const float deltaTime) override;
+	bool CleanUp() override;
 
 	update_status Draw();
 
@@ -33,8 +31,7 @@ private:
 	bool show_application_window = false;
 	bool show_log_window = false;
 	bool show_properties_window = false;
-
-	const int tickBufferLength = 120;
+	
 	int tickBufferPtr = 0;
 	std::vector<float> deltaTickBuffer;
 	std::vector<float> fpsBuffer;

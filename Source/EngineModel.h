@@ -15,11 +15,10 @@ public:
 	const float3* getMinPosValues() const { return minPosValues; }
 	const float3* getMaxPosValues() const { return maxPosValues; }
 
-	void RenderUI();
+	void RenderUI() const;
 
 private:
-	
-	void LoadMaterials(const std::string& modelPath, const tinygltf::Model &srcModel);
+	static void LoadMaterials(const std::string& modelPath, const tinygltf::Model &srcModel);
 
 	std::string modelName;
 	std::vector<EngineMesh*> meshes;

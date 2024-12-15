@@ -2,6 +2,7 @@
 
 #include<list>
 #include <string>
+#include <vector>
 
 #include "Globals.h"
 #include "Module.h"

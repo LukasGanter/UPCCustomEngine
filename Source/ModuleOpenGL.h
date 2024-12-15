@@ -10,17 +10,17 @@ class ModuleOpenGL : public Module
 {
 public:
 	ModuleOpenGL();
-	~ModuleOpenGL();
+	~ModuleOpenGL() override;
 
-	bool Init();
-	update_status PreUpdate();
-	update_status Update(const float deltaTime);
-	update_status PostUpdate();
-	bool CleanUp();
+	bool Init() override;
+	update_status PreUpdate() override;
+	update_status Update(const float deltaTime) override;
+	update_status PostUpdate() override;
+	bool CleanUp() override;
 
-	void* GetContext() { return context; };
+	void* GetContext() const { return context; }
 
-	void RenderUI();
+	static void RenderUI();
 
 private:
 	void* context;

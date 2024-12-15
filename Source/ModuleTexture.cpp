@@ -6,9 +6,7 @@
 #include "imgui/imgui.h"
 
 ModuleTexture::ModuleTexture()
-{
-	
-}
+= default;
 
 // Destructor
 ModuleTexture::~ModuleTexture()
@@ -19,38 +17,7 @@ ModuleTexture::~ModuleTexture()
 	}
 }
 
-// Called before render is available
-bool ModuleTexture::Init()
-{
-	LOG("Creating Renderer context");
-
-	return true;
-}
-
-update_status ModuleTexture::PreUpdate()
-{
-	
-	return UPDATE_CONTINUE;
-}
-
-// Called every draw update
-update_status ModuleTexture::Update(const float deltaTime)
-{
-	return UPDATE_CONTINUE;
-}
-
-update_status ModuleTexture::PostUpdate()
-{
-	return UPDATE_CONTINUE;
-}
-
-// Called before quitting
-bool ModuleTexture::CleanUp()
-{
-	return true;
-}
-
-void ModuleTexture::RenderUI()
+void ModuleTexture::RenderUI() const
 {
 	if (textureValid)
 	{

@@ -11,14 +11,10 @@ class ModuleCamera : public Module
 {
 public:
 	ModuleCamera();
-	~ModuleCamera();
+	~ModuleCamera() override;
 
-	bool Init();
-	update_status PreUpdate();
-	update_status Update(const float deltaTime);
-	update_status PostUpdate();
-	bool CleanUp();
-	void WindowResized(unsigned width, unsigned height);
+	update_status PreUpdate() override;
+	update_status Update(const float deltaTime) override;
 	
 	float4x4 model, view, projection;
 
@@ -29,11 +25,10 @@ public:
 	void FocusMesh();
 
 private:
-
-	float GetDistanceForWholeMeshView() const;
-	float GetCenterHeightForWholeMeshView() const;
-	float GetMaxHeightForMeshView() const;
-	float3 GetCenterOfMesh() const;
+	static float GetDistanceForWholeMeshView();
+	static float GetCenterHeightForWholeMeshView();
+	static float GetMaxHeightForMeshView();
+	static float3 GetCenterOfMesh();
 	
 	void StartOrbiting();
 	void StopOrbiting();
@@ -49,7 +44,7 @@ private:
 	float3 alignDirection = float3(0, 1, 0);
 
 	bool orbiting = false;
-	float orbitingRadius;
-	float currentOrbitingRads;
+	float orbitingRadius = -1;
+	float currentOrbitingRads = 0;
 	float3 target = float3::zero;
 };

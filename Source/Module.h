@@ -9,12 +9,10 @@ class Module
 public:
 
 	Module()
-	{
-	}
+	= default;
 
-    virtual ~Module()
-    {
-    }
+	virtual ~Module()
+	= default;
 
 	virtual bool Init() 
 	{

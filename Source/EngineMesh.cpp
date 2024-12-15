@@ -1,6 +1,5 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleProgram.h"
 #include "EngineMesh.h"
 
 #include "ModuleTexture.h"
@@ -8,14 +7,13 @@
 #include "GL/glew.h"
 #include "imgui/imgui.h"
 #include "Math/float3.h"
+#include "Time/Clock.h"
 #include "tinyGltf/tiny_gltf.h"
 
 using namespace tinygltf;
 
 EngineMesh::EngineMesh()
-{
-	
-}
+= default;
 
 // Destructor
 EngineMesh::~EngineMesh()
@@ -78,7 +76,7 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 			
 			glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexCount, nullptr, GL_STATIC_DRAW);
 		
-			Vertex* ptr = reinterpret_cast<Vertex*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+			Vertex* ptr = static_cast<Vertex*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 			for (size_t i = 0; i < vertexCount; ++i)
 			{
 				const float3 pos = *reinterpret_cast<const float3*>(bufferPos);
@@ -92,7 +90,7 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 		{
 			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * vertexCount, nullptr, GL_STATIC_DRAW);
 		
-			float3* ptr = reinterpret_cast<float3*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+			float3* ptr = static_cast<float3*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 			for (size_t i = 0; i < vertexCount; ++i)
 			{
 				ptr[i] = *reinterpret_cast<const float3*>(bufferPos);
@@ -115,7 +113,7 @@ void EngineMesh::LoadEBO(const Model& model, const Mesh& mesh, const Primitive& 
 		glGenBuffers(1, &ebo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indexCount, nullptr, GL_STATIC_DRAW);
-		unsigned int* ptr = reinterpret_cast<unsigned int*>(glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY));
+		unsigned int* ptr = static_cast<unsigned int*>(glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY));
 		const BufferView& indView = model.bufferViews[indAcc.bufferView];
 		const unsigned char* buffer = &(model.buffers[indView.buffer].data[indAcc.byteOffset +
 			indView.byteOffset]);
@@ -143,7 +141,7 @@ void EngineMesh::LoadEBO(const Model& model, const Mesh& mesh, const Primitive& 
 void EngineMesh::CreateVAO()
 {
 	
-	LOG("Generating vao");
+	LOG("Generating vao")
 	
 	glGenVertexArrays(1, &vao);
 	
@@ -152,14 +150,14 @@ void EngineMesh::CreateVAO()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float)*3+sizeof(float)*2, (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float)*3+sizeof(float)*2, static_cast<void*>(0));
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float)*3+sizeof(float)*2, (void*)(sizeof(float)*3));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float)*3+sizeof(float)*2, reinterpret_cast<void*>(sizeof(float) * 3));
 
 	glBindVertexArray(0);
 }
 
-void EngineMesh::Draw()
+void EngineMesh::Draw() const
 {
 	const int loadedTexture = App->GetTexture()->getLoadedTextureID();
 	if (loadedTexture != -1)
@@ -171,7 +169,7 @@ void EngineMesh::Draw()
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
 }
 
-void EngineMesh::RenderUI()
+void EngineMesh::RenderUI() const
 {
 	ImGui::Text(("Mesh: " + meshTitle).c_str());
 	ImGui::Text(("Vertices: " + std::to_string(vertexCount)).c_str());

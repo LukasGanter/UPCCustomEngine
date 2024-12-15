@@ -1,6 +1,6 @@
 #include <iostream>
 #include <ostream>
-#include <stdlib.h>
+#include <cstdlib>
 #include "Application.h"
 #include "Globals.h"
 
@@ -17,14 +17,14 @@ enum main_states
 	MAIN_EXIT
 };
 
-Application* App = NULL;
+Application* App = nullptr;
 
 int main(int argc, char ** argv)
 {
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
-	
-	const Uint64 updateTargetTickDuration = 1000 / FPS;
+
+	constexpr Uint64 updateTargetTickDuration = 1000 / FPS;
 	Uint64 lastUpdateTicks = 0;
 
 	while (state != MAIN_EXIT)
@@ -34,22 +34,22 @@ int main(int argc, char ** argv)
 		case MAIN_CREATION:
 
 			App = new Application();
-			LOG("Application Creation --------------");
+			LOG("Application Creation --------------")
 			state = MAIN_START;
 			break;
 
 		case MAIN_START:
 
-			LOG("Application Init --------------");
+			LOG("Application Init --------------")
 			if (App->Init() == false)
 			{
-				LOG("Application Init exits with error -----");
+				LOG("Application Init exits with error -----")
 				state = MAIN_EXIT;
 			}
 			else
 			{
 				state = MAIN_UPDATE;
-				LOG("Application Update --------------");
+				LOG("Application Update --------------")
 			}
 
 			break;
@@ -63,7 +63,7 @@ int main(int argc, char ** argv)
 
 					if (update_return == UPDATE_ERROR)
 					{
-						LOG("Application Update exits with error -----");
+						LOG("Application Update exits with error -----")
 						state = MAIN_EXIT;
 					}
 
@@ -77,10 +77,10 @@ int main(int argc, char ** argv)
 
 		case MAIN_FINISH:
 
-			LOG("Application CleanUp --------------");
+			LOG("Application CleanUp --------------")
 			if (App->CleanUp() == false)
 			{
-				LOG("Application CleanUp exits with error -----");
+				LOG("Application CleanUp exits with error -----")
 			}
 			else
 				main_return = EXIT_SUCCESS;
@@ -93,7 +93,7 @@ int main(int argc, char ** argv)
 
 	}
 
-	LOG("Bye :)\n");
+	LOG("Bye :)\n")
 	delete App;
 	return main_return;
 }

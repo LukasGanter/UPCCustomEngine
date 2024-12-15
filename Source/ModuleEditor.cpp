@@ -7,24 +7,20 @@
 #include "ModuleWindow.h"
 #include "ModuleOpenGL.h"
 #include "SDL.h"
-#include "GL/glew.h"
 #include "imgui/imgui_impl_sdl2.h"
 #include "imgui/imgui_impl_opengl3.h"
 
 ModuleEditor::ModuleEditor()
-{
-	
-}
+= default;
 
 // Destructor
 ModuleEditor::~ModuleEditor()
-{
-}
+= default;
 
 // Called before render is available
 bool ModuleEditor::Init()
 {
-	LOG("Creating Editor Program");
+	LOG("Creating Editor Program")
 	ImGui::CreateContext();
 
 	ImGuiIO& io = ImGui::GetIO();
@@ -37,37 +33,24 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->GetWindow()->window, App->GetOpenGL()->GetContext());
 	ImGui_ImplOpenGL3_Init("#version 460");
 
-	deltaTickBuffer = std::vector<float>( tickBufferLength);
-	fpsBuffer = std::vector<float>( tickBufferLength);
+	deltaTickBuffer = std::vector<float>( FPS_TICK_BUFFER_SIZE);
+	fpsBuffer = std::vector<float>( FPS_TICK_BUFFER_SIZE);
 
 	return true;
-}
-
-update_status ModuleEditor::PreUpdate()
-{
-	
-	return UPDATE_CONTINUE;
 }
 
 // Called every draw update
 update_status ModuleEditor::Update(const float deltaTime)
 {
-	if (tickBufferPtr >= tickBufferLength)
+	if (tickBufferPtr >= FPS_TICK_BUFFER_SIZE)
 	{
 		tickBufferPtr = 0;
 	}
 	deltaTickBuffer[tickBufferPtr] = deltaTime;
-	fpsBuffer[tickBufferPtr] = 1000. / deltaTime;
+	fpsBuffer[tickBufferPtr] = 1000.f / deltaTime;
 	tickBufferPtr++;
 	
-	Draw();
-
-	return UPDATE_CONTINUE;
-}
-
-update_status ModuleEditor::PostUpdate()
-{
-	return UPDATE_CONTINUE;
+	return Draw();
 }
 
 // Called before quitting
@@ -76,8 +59,6 @@ bool ModuleEditor::CleanUp()
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
-
-	//LOG("Destroying renderer");
 	return true;
 }
 

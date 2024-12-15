@@ -6,40 +6,20 @@
 #include "GL/glew.h"
 
 ModuleProgram::ModuleProgram()
-{
-	
-}
+= default;
 
 // Destructor
 ModuleProgram::~ModuleProgram()
-{
-}
+= default;
 
 // Called before render is available
 bool ModuleProgram::Init()
 {
-	LOG("Creating Shader Program");
+	LOG("Creating Shader Program")
 
 	createExerciseProgram();
 
 	return true;
-}
-
-update_status ModuleProgram::PreUpdate()
-{
-	
-	return UPDATE_CONTINUE;
-}
-
-// Called every draw update
-update_status ModuleProgram::Update(const float deltaTime)
-{
-	return UPDATE_CONTINUE;
-}
-
-update_status ModuleProgram::PostUpdate()
-{
-	return UPDATE_CONTINUE;
 }
 
 // Called before quitting
@@ -80,7 +60,7 @@ char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
 	{
 		fseek(file, 0, SEEK_END);
 		int size = ftell(file);
-		data = (char*)malloc(size + 1);
+		data = static_cast<char*>(malloc(size + 1));
 		fseek(file, 0, SEEK_SET);
 		fread(data, 1, size, file);
 		data[size] = 0;
@@ -89,11 +69,11 @@ char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
 	return data;
 }
 
-unsigned ModuleProgram::CompileShader(unsigned type, const char* source)
+unsigned ModuleProgram::CompileShader(const unsigned type, const char* source)
 {
 	unsigned shader_id = glCreateShader(type);
 
-	LOG("Log Info: %s", "info");
+	LOG("Log Info: %s", "info")
 	glShaderSource(shader_id, 1, &source, 0);
 	glCompileShader(shader_id);
 	int res = GL_FALSE;
@@ -105,9 +85,9 @@ unsigned ModuleProgram::CompileShader(unsigned type, const char* source)
 		if (len > 0)
 		{
 			int written = 0;
-			char* info = (char*)malloc(len);
+			char* info = static_cast<char*>(malloc(len));
 			glGetShaderInfoLog(shader_id, len, &written, info);
-			LOG("Log Info: %s", info);
+			LOG("Log Info: %s", info)
 			free(info);
 		}
 	}
@@ -129,9 +109,9 @@ unsigned ModuleProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)
 		if (len > 0)
 		{
 			int written = 0;
-			char* info = (char*)malloc(len);
+			char* info = static_cast<char*>(malloc(len));
 			glGetProgramInfoLog(program_id, len, &written, info);
-			LOG("Program Log Info: %s", info);
+			LOG("Program Log Info: %s", info)
 			free(info);
 		}
 	}

@@ -14,15 +14,9 @@ class ModuleTexture : public Module
 {
 public:
 	ModuleTexture();
-	~ModuleTexture();
+	~ModuleTexture() override;
 
-	bool Init();
-	update_status PreUpdate();
-	update_status Update(const float deltaTime);
-	update_status PostUpdate();
-	bool CleanUp();
-
-	void RenderUI();
+	void RenderUI() const;
 
 	GLuint LoadTexture(const std::string& texturePath);
 
@@ -33,6 +27,6 @@ private:
 	bool textureValid = false;
 	int loadedTextureWidth = -1;
 	int loadedTextureHeight = -1;
-	std::string loadedTextureName = "";
+	std::string loadedTextureName;
 	GLuint meshTexture;
 };

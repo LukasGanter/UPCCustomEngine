@@ -1,10 +1,9 @@
 #pragma once
-#include <iostream>
+#include <cstdarg>
 #include <ostream>
 
 #include "Application.h"
 #include "Globals.h"
-#include "ModuleEditor.h"
 
 void log(const char file[], int line, const char* format, ...)
 {

@@ -1,8 +1,5 @@
 #pragma once
 #define NOMINMAX
-#include <windows.h>
-#include <stdio.h>
-#include <vector>
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -19,6 +16,7 @@ enum update_status
 #define SCREEN_WIDTH 1280
 #define FULLSCREEN false
 #define VSYNC true
-#define TITLE "Custom game engine"
+#define TITLE "UPCCustomEngine"
 #define FPS 60
 #define LOG_MSG_BUFFER_SIZE 40
+#define FPS_TICK_BUFFER_SIZE 120

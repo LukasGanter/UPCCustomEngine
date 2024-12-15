@@ -8,12 +8,9 @@
 #include "ModuleTexture.h"
 #include "imgui/imgui.h"
 #include "tinyGltf/tiny_gltf.h"
-#include "tinyGltf/tiny_gltf.h"
 
 EngineModel::EngineModel()
-{
-	
-}
+= default;
 
 // Destructor
 EngineModel::~EngineModel()
@@ -84,12 +81,11 @@ void EngineModel::Render() const
 		mesh->Draw();
 }
 
-void EngineModel::RenderUI()
+void EngineModel::RenderUI() const
 {
 	if (ImGui::CollapsingHeader(modelName.c_str())) {
 		for (const auto& mesh : meshes)
 			mesh->RenderUI();
-			ImGui::Separator();
 			ImGui::Spacing();
 	}
 	App->GetTexture()->RenderUI();

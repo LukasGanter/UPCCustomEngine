@@ -15,9 +15,7 @@
 
 
 ModuleModel::ModuleModel()
-{
-	
-}
+= default;
 
 // Destructor
 ModuleModel::~ModuleModel()
@@ -28,16 +26,11 @@ ModuleModel::~ModuleModel()
 // Called before render is available
 bool ModuleModel::Init()
 {
-	LOG("Creating Base Model");
+	LOG("Creating Base Model")
 
 	LoadModel("Resources\\Models\\BakerHouse\\BakerHouse.gltf");
 
 	return true;
-}
-
-update_status ModuleModel::PreUpdate()
-{
-	return UPDATE_CONTINUE;
 }
 
 // Called every draw update
@@ -56,17 +49,6 @@ update_status ModuleModel::Update(const float deltaTime)
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleModel::PostUpdate()
-{
-	return UPDATE_CONTINUE;
-}
-
-// Called before quitting
-bool ModuleModel::CleanUp()
-{
-	return true;
-}
-
 void ModuleModel::LoadAssets(const std::string& filePath)
 {
 	if (filePath.compare(filePath.size()-5, 5, ".gltf") == 0)
@@ -78,7 +60,7 @@ void ModuleModel::LoadAssets(const std::string& filePath)
 	}
 }
 
-void ModuleModel::RenderUI()
+void ModuleModel::RenderUI() const
 {
 	if (loadedModel != nullptr)
 	{
@@ -88,10 +70,10 @@ void ModuleModel::RenderUI()
 
 void ModuleModel::LoadModel(const std::string& filePath)
 {
-	LOG("Loading model: %s", filePath.c_str());
+	LOG("Loading model: %s", filePath.c_str())
 	delete loadedModel;
 	loadedModel = new EngineModel();
-	const unsigned long long splitPositionFileName = filePath.find_last_of("\\");
+	const unsigned long long splitPositionFileName = filePath.find_last_of('\\');
 	loadedModel->Load(filePath.substr(0, splitPositionFileName + 1), filePath.substr(splitPositionFileName + 1, filePath.length()));
 	App->GetCamera()->FocusMesh();
 }

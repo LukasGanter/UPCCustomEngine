@@ -1,10 +1,7 @@
 #pragma once
-#include <vector>
 
 #include "Math/float3.h"
 #include "Math/float2.h"
-
-//#include "tinyGltf/tiny_gltf.h"
 
 namespace tinygltf
 {
@@ -27,9 +24,9 @@ public:
 
 	void Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
 
-	void Draw();
+	void Draw() const;
 
-	void RenderUI();
+	void RenderUI() const;
 
 	const float3* GetMinPosValues() const { return minPosValues; }
 	const float3* GetMaxPosValues() const { return maxPosValues; }

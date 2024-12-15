@@ -4,9 +4,7 @@
 
 #include "EngineModel.h"
 #include "ModuleWindow.h"
-#include "ModuleProgram.h"
 #include "SDL.h"
-#include "GL/glew.h"
 #include "Geometry/Frustum.h"
 #include "ModuleInput.h"
 #include "ModuleModel.h"
@@ -15,20 +13,11 @@
 #include "Math/MathFunc.h"
 
 ModuleCamera::ModuleCamera()
-{
-	
-}
+= default;
 
 // Destructor
 ModuleCamera::~ModuleCamera()
-{
-}
-
-// Called before render is available
-bool ModuleCamera::Init()
-{
-	return true;
-}
+= default;
 
 update_status ModuleCamera::PreUpdate()
 {
@@ -126,7 +115,7 @@ void ModuleCamera::StopOrbiting()
 	orbiting = false;
 }
 
-float ModuleCamera::GetDistanceForWholeMeshView() const
+float ModuleCamera::GetDistanceForWholeMeshView()
 {
 	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
 	if (loadedModel == nullptr) return 1;
@@ -139,7 +128,7 @@ float ModuleCamera::GetDistanceForWholeMeshView() const
 	return Max(minPos->Length(), maxPos->Length()) + 0.1;
 }
 
-float ModuleCamera::GetCenterHeightForWholeMeshView() const
+float ModuleCamera::GetCenterHeightForWholeMeshView()
 {
 	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
 	if (loadedModel == nullptr) return 1;
@@ -152,7 +141,7 @@ float ModuleCamera::GetCenterHeightForWholeMeshView() const
 	return (minPos->y + maxPos->y) / 2.f;
 }
 
-float ModuleCamera::GetMaxHeightForMeshView() const
+float ModuleCamera::GetMaxHeightForMeshView()
 {
 	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
 	if (loadedModel == nullptr) return 1;
@@ -164,7 +153,7 @@ float ModuleCamera::GetMaxHeightForMeshView() const
 	return maxPos->y;
 }
 
-float3 ModuleCamera::GetCenterOfMesh() const
+float3 ModuleCamera::GetCenterOfMesh()
 {
 	EngineModel* loadedModel = App->GetModel()->GetLoadedModel();
 	if (loadedModel == nullptr) return float3::zero;
@@ -233,20 +222,4 @@ void ModuleCamera::LookInDirection(const float3& viewDirection)
 	view = RotationMatrix * TranslationMatrix;
 }
 
-update_status ModuleCamera::PostUpdate()
-{
-	return UPDATE_CONTINUE;
-}
-
-// Called before quitting
-bool ModuleCamera::CleanUp()
-{
-	LOG("Destroying renderer");
-
-	return true;
-}
-
-void ModuleCamera::WindowResized(unsigned width, unsigned height)
-{
-}
 
