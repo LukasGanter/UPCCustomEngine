@@ -36,6 +36,9 @@ public:
     ModuleTexture* GetTexture() const { return texture; }
     ModuleModel* GetModel() const { return model; }
 
+	int logMsgBufferPtr = 0;
+	std::vector<char*> logMsgBuffer = std::vector<char*>(LOG_MSG_BUFFER_SIZE, nullptr);
+
 private:
 
     ModuleOpenGL* render = nullptr;

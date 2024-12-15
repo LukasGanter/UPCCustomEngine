@@ -32,6 +32,9 @@ Application::~Application()
     {
         delete *it;
     }
+	modules.clear();
+	
+	logMsgBuffer.clear();
 }
 
 bool Application::Init()

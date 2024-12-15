@@ -6,9 +6,6 @@
 #include "Globals.h"
 #include "ModuleEditor.h"
 
-int logMsgBufferPtr = 0;
-std::vector<char*> logMsgBuffer(LOG_MSG_BUFFER_SIZE, nullptr);
-
 void log(const char file[], int line, const char* format, ...)
 {
 	static char tmp_string[4096];
@@ -22,10 +19,10 @@ void log(const char file[], int line, const char* format, ...)
 	sprintf_s(tmp_string2, 4096, "\n%s(%d) : %s", file, line, tmp_string);
 	OutputDebugString(tmp_string2);
 	
-	if (logMsgBufferPtr >= LOG_MSG_BUFFER_SIZE)
+	if (App->logMsgBufferPtr >= LOG_MSG_BUFFER_SIZE)
 	{
-		logMsgBufferPtr = 0;
+		App->logMsgBufferPtr = 0;
 	}
-	logMsgBuffer[logMsgBufferPtr] = tmp_string;
-	logMsgBufferPtr++;
+	App->logMsgBuffer[App->logMsgBufferPtr] = tmp_string;
+	App->logMsgBufferPtr++;
 }

@@ -22,6 +22,3 @@ enum update_status
 #define TITLE "Custom game engine"
 #define FPS 60
 #define LOG_MSG_BUFFER_SIZE 40
-
-extern int logMsgBufferPtr;
-extern std::vector<char*> logMsgBuffer;
