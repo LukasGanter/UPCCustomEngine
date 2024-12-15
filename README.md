@@ -22,4 +22,5 @@ https://github.com/LukasGanter/UPCCustomEngine
 
 Known issues:
 - DirectXTex must be build manually before running the engine. The solution file can be found under Source/DirectXTex-main/DirectXTex_Desktop_2022. For the debug engine build it must we build with the Debug profile, for release with the Release profile
+- The working directory must be set manually in the VS options under Configuration/Debugging. The needed value is $(ProjectDir)/../Game
 - tinyGltf contains a memory leak
