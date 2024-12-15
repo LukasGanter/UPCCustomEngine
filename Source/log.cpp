@@ -26,6 +26,6 @@ void log(const char file[], int line, const char* format, ...)
 	{
 		logMsgBufferPtr = 0;
 	}
-	logMsgBuffer[logMsgBufferPtr] = tmp_string2;
+	logMsgBuffer[logMsgBufferPtr] = tmp_string;
 	logMsgBufferPtr++;
 }
