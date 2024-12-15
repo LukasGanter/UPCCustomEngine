@@ -44,6 +44,7 @@ void EngineModel::Load(const std::string& newModelPath, const std::string& newMo
 		for (const auto& primitive : srcMesh.primitives)
 		{
 			auto mesh =  new EngineMesh();
+			
 			mesh->Load(model, srcMesh, primitive);
 
 			const float3* meshMinPosValues = mesh->GetMinPosValues();

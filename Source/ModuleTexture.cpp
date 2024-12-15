@@ -68,10 +68,12 @@ void ModuleTexture::RenderUI()
 
 GLuint ModuleTexture::LoadTexture(const std::string& texturePath)
 {
+	
+	LOG("Loading texture: %s", texturePath.c_str());
 	if (textureValid)
 	{
 		glDeleteTextures(1, &meshTexture);
-	textureValid = false;
+		textureValid = false;
 	}
 	
 	std::wstring widestr = std::wstring(texturePath.begin(), texturePath.end());
@@ -98,6 +100,10 @@ GLuint ModuleTexture::LoadTexture(const std::string& texturePath)
 	loadedTextureHeight = image->GetMetadata().height;
 	const unsigned long long splitPositionFileName = texturePath.find_last_of("\\");
 	loadedTextureName = texturePath.substr(splitPositionFileName + 1, texturePath.length());
+	
+	LOG("Extracting texture parameters");
+	LOG("Name: %s", loadedTextureName.c_str());
+	LOG("Width: %u, height: %u", loadedTextureWidth, loadedTextureHeight);
 
 	GLint internalFormat = GL_NONE;
 	GLint format = GL_NONE;

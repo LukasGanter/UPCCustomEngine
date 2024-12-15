@@ -88,6 +88,7 @@ void ModuleModel::RenderUI()
 
 void ModuleModel::LoadModel(const std::string& filePath)
 {
+	LOG("Loading model: %s", filePath.c_str());
 	delete loadedModel;
 	loadedModel = new EngineModel();
 	const unsigned long long splitPositionFileName = filePath.find_last_of("\\");

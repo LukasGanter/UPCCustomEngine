@@ -26,6 +26,7 @@ EngineMesh::~EngineMesh()
 
 void EngineMesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive)
 {
+	LOG("Loading mesh: %s", mesh.name.c_str())
 	materialIndex = primitive.material;
 	LoadVBO(model, mesh, primitive);
 	LoadEBO(model, mesh, primitive);
@@ -40,6 +41,7 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 	const auto& itPos = primitive.attributes.find("POSITION");
 	if (itPos != primitive.attributes.end())
 	{
+		LOG("Loading vertex buffer object: position")
 		const Accessor& posAcc = model.accessors[itPos->second];
 		vertexCount = posAcc.count;
 		if (posAcc.minValues.size() == 3)
@@ -62,6 +64,7 @@ void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& 
 		const auto& itTex = primitive.attributes.find("TEXCOORD_0");
 		if (itTex != primitive.attributes.end())
 		{
+			LOG("Loading vertex buffer object: texture coordinates")
 			const Accessor& texCoordAcc = model.accessors[itTex->second];
 		
 			SDL_assert(texCoordAcc.count == vertexCount);
@@ -105,6 +108,7 @@ void EngineMesh::LoadEBO(const Model& model, const Mesh& mesh, const Primitive& 
 {
 	if (primitive.indices >= 0)
 	{
+		LOG("Loading index buffer object")
 		const Accessor& indAcc = model.accessors[primitive.indices];
 		indexCount = indAcc.count;
 
@@ -138,6 +142,9 @@ void EngineMesh::LoadEBO(const Model& model, const Mesh& mesh, const Primitive& 
 
 void EngineMesh::CreateVAO()
 {
+	
+	LOG("Generating vao");
+	
 	glGenVertexArrays(1, &vao);
 	
 	glBindVertexArray(vao);
