@@ -81,23 +81,27 @@ bool ModuleEditor::CleanUp()
 	return true;
 }
 
-void ModuleEditor::Draw()
+update_status ModuleEditor::Draw()
 {
+	update_status ret = UPDATE_CONTINUE;
+	
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
 	if (ImGui::BeginMainMenuBar()) {
-		if (ImGui::BeginMenu("Menu")) {
-			if (ImGui::MenuItem("Gui Demo")) {
-				show_demo_window = !show_demo_window;
+		if (ImGui::BeginMenu("General")) {
+			ImGui::TextLinkOpenURL("Github repository", "https://github.com/LukasGanter/UPCCustomEngine");
+			if (ImGui::MenuItem("About")) {
+				show_about_window = !show_about_window;
+			}
+			if (ImGui::Button("Quit"))
+			{
+				ret = UPDATE_STOP;
 			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Window")) {
-			if (ImGui::MenuItem("Configuration")) {
-				show_config_window = !show_config_window;
-			}
 			if (ImGui::MenuItem("Graphics")) {
 				show_graphics_window = !show_graphics_window;
 			}
@@ -116,23 +120,20 @@ void ModuleEditor::Draw()
 	}
 	
 
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
-
-	if (show_config_window)
-		ShowConfigurationWindow(&show_demo_window);
+	if (show_about_window)
+		ShowAboutWindow();
 
 	if (show_graphics_window)
-		ShowGraphicsWindow(&show_graphics_window);
+		ShowGraphicsWindow();
 
 	if (show_application_window)
-		ShowApplicationsWindow(&show_application_window);
+		ShowApplicationsWindow();
 
 	if (show_log_window)
-		ShowLogWindow(&show_log_window);
+		ShowLogWindow();
 
 	if (show_properties_window)
-		ShowPropertiesWindow(&show_properties_window);
+		ShowPropertiesWindow();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -148,38 +149,35 @@ void ModuleEditor::Draw()
 		ImGui::RenderPlatformWindowsDefault();
 		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	}
+	
+	return ret;
 }
 
-void ModuleEditor::ShowConfigurationWindow(bool* open)
+void ModuleEditor::ShowAboutWindow()
 {
-	if (ImGui::CollapsingHeader("Window options")) {
-		ImGui::SliderInt("Brightness", &brightness, 0, 100);
-		ImGui::SliderInt("Width", &width, 0, 1920);
-		ImGui::SliderInt("Height", &height, 0, 1080);
-	}
+	ImGui::Begin("About");
+	ImGui::Text("Developer: Lukas Ganter");
+	ImGui::Text("Engine version: v0.1");
+	ImGui::TextLinkOpenURL("Github repository", "https://github.com/LukasGanter/UPCCustomEngine");
 	if (ImGui::Button("Close")) {
-		show_config_window = false;
+		show_about_window = false;
 	}
+	ImGui::End();
 }
 
-void ModuleEditor::ShowAboutWindow(bool* open)
+void ModuleEditor::ShowGraphicsWindow()
 {
-	//ImGui
-}
-
-void ModuleEditor::ShowGraphicsWindow(bool* open)
-{
-	if (ImGui::CollapsingHeader("Window options")) {
-		ImGui::SliderFloat("Horizontal FOV", &App->GetCamera()->horizontalFOV, 0, 180);
-		ImGui::SliderFloat("Near clipping plane", &App->GetCamera()->nearPlaneDistance, 0.001f, App->GetCamera()->farPlaneDistance);
-		ImGui::SliderFloat("Far clipping plane", &App->GetCamera()->farPlaneDistance, App->GetCamera()->nearPlaneDistance + 0.001f, 1000);
-	}
+	ImGui::Begin("Graphic settings");
+	ImGui::SliderFloat("Horizontal FOV", &App->GetCamera()->horizontalFOV, 0, 180);
+	ImGui::SliderFloat("Near clipping plane", &App->GetCamera()->nearPlaneDistance, 0.001f, App->GetCamera()->farPlaneDistance);
+	ImGui::SliderFloat("Far clipping plane", &App->GetCamera()->farPlaneDistance, App->GetCamera()->nearPlaneDistance + 0.001f, 1000);
 	if (ImGui::Button("Close")) {
 		show_graphics_window = false;
 	}
+	ImGui::End();
 }
 
-void ModuleEditor::ShowApplicationsWindow(bool* open)
+void ModuleEditor::ShowApplicationsWindow()
 {
 	ImGui::Begin("Application options");
 	
@@ -194,7 +192,7 @@ void ModuleEditor::ShowApplicationsWindow(bool* open)
 	ImGui::End();
 }
 
-void ModuleEditor::ShowLogWindow(bool* open)
+void ModuleEditor::ShowLogWindow()
 {
 	ImGui::Begin("Logs");
 	unsigned int workingPtr = App->logMsgBufferPtr + 1;
@@ -217,7 +215,7 @@ void ModuleEditor::ShowLogWindow(bool* open)
 	ImGui::End();
 }
 
-void ModuleEditor::ShowPropertiesWindow(bool* open)
+void ModuleEditor::ShowPropertiesWindow()
 {
 	ImGui::Begin("Properties", &show_properties_window, ImGuiWindowFlags_MenuBar);
 	App->GetModel()->RenderUI();

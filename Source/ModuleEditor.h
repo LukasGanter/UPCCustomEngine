@@ -19,27 +19,20 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	void Draw();
+	update_status Draw();
 
 private:
-	void ShowConfigurationWindow(bool* open);
-	void ShowAboutWindow(bool* open);
-	void ShowGraphicsWindow(bool* open);
-	void ShowApplicationsWindow(bool* open);
-	void ShowLogWindow(bool* open);
-	void ShowPropertiesWindow(bool* open);
+	void ShowAboutWindow();
+	void ShowGraphicsWindow();
+	void ShowApplicationsWindow();
+	void ShowLogWindow();
+	void ShowPropertiesWindow();
 
-	bool show_demo_window = false;
-	bool show_config_window = false;
 	bool show_about_window = false;
 	bool show_graphics_window = false;
 	bool show_application_window = false;
 	bool show_log_window = false;
 	bool show_properties_window = false;
-
-	int brightness = 50;
-	int width = 1280;
-	int height = 720;
 
 	const int tickBufferLength = 120;
 	int tickBufferPtr = 0;
