@@ -176,6 +176,7 @@ void ModuleEditor::ShowApplicationsWindow()
 void ModuleEditor::ShowLogWindow()
 {
 	ImGui::Begin("Logs");
+	ImGui::BeginChild("Output");
 	unsigned int workingPtr = App->logMsgBufferPtr + 1;
 	for (unsigned int i = 0; i < App->logMsgBuffer.size(); i++)
 	{
@@ -189,6 +190,7 @@ void ModuleEditor::ShowLogWindow()
 		}
 		workingPtr++;
 	}
+	ImGui::EndChild();
 	if (ImGui::Button("Close")) {
 		show_log_window = false;
 	}
