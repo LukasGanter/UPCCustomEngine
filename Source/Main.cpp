@@ -95,5 +95,12 @@ int main(int argc, char ** argv)
 
 	delete App;
 	LOG("Bye :)\n");
+
+	for (const char* log : logMsgBuffer)
+	{
+		delete log;
+	}
+	logMsgBuffer.clear();
+	
 	return main_return;
 }
