@@ -53,7 +53,7 @@ update_status ModuleOpenGL::PreUpdate()
 	int height = 0;
 	SDL_GetWindowSize(App->GetWindow()->window, &width, &height);
 	glViewport(0, 0, width, height);
-	glClearColor(1.f, 1.f, 1.f, 1.0f);
+	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	return UPDATE_CONTINUE;
