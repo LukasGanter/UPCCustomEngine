@@ -27,6 +27,7 @@ private:
 	void ShowGraphicsWindow(bool* open);
 	void ShowApplicationsWindow(bool* open);
 	void ShowLogWindow(bool* open);
+	void ShowPropertiesWindow(bool* open);
 
 	bool show_demo_window = false;
 	bool show_config_window = false;
@@ -34,6 +35,7 @@ private:
 	bool show_graphics_window = false;
 	bool show_application_window = false;
 	bool show_log_window = false;
+	bool show_properties_window = false;
 
 	int brightness = 50;
 	int width = 1280;

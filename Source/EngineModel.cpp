@@ -6,6 +6,7 @@
 #define TINYGLTF_NO_STB_IMAGE
 #define TINYGLTF_NO_EXTERNAL_IMAGE 
 #include "ModuleTexture.h"
+#include "imgui/imgui.h"
 #include "tinyGltf/tiny_gltf.h"
 #include "tinyGltf/tiny_gltf.h"
 
@@ -25,12 +26,13 @@ EngineModel::~EngineModel()
 	delete maxPosValues;
 }
 
-void EngineModel::Load(const std::string& modelPath, const std::string& modelName)
+void EngineModel::Load(const std::string& newModelPath, const std::string& newModelName)
 {
+	modelName = newModelName;
 	tinygltf::TinyGLTF gltfContext;
 	tinygltf::Model model;
 	std::string error, warning;
-	bool loadOk = gltfContext.LoadASCIIFromFile(&model, &error, &warning, modelPath + modelName);
+	bool loadOk = gltfContext.LoadASCIIFromFile(&model, &error, &warning, newModelPath + modelName);
 	if (!loadOk)
 	{
 		LOG("Error loading %s: %s", &modelName, error.c_str())
@@ -72,13 +74,25 @@ void EngineModel::Load(const std::string& modelPath, const std::string& modelNam
 			meshes.push_back(mesh);
 		}
 	}
-	LoadMaterials(modelPath, model);
+	LoadMaterials(newModelPath, model);
 }
 
 void EngineModel::Render() const
 {
 	for (const auto& mesh : meshes)
 		mesh->Draw();
+}
+
+void EngineModel::RenderUI()
+{
+	if (ImGui::CollapsingHeader(modelName.c_str())) {
+		for (const auto& mesh : meshes)
+			mesh->RenderUI();
+			ImGui::Separator();
+			ImGui::Spacing();
+	}
+	App->GetTexture()->RenderUI();
+	
 }
 
 void EngineModel::LoadMaterials(const std::string& modelPath, const tinygltf::Model& srcModel)

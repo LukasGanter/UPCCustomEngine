@@ -17,11 +17,13 @@ public:
 	void LoadAssets(const std::string& filePath);
 	EngineModel* GetLoadedModel() const { return loadedModel;}
 
+	void RenderUI();
+
 private:
 
 	void LoadModel(const std::string& filePath);
 
 	void LoadTexture(const std::string& filePath);
-
+	
 	EngineModel* loadedModel = nullptr;
 };

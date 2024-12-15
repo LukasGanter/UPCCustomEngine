@@ -78,6 +78,14 @@ void ModuleModel::LoadAssets(const std::string& filePath)
 	}
 }
 
+void ModuleModel::RenderUI()
+{
+	if (loadedModel != nullptr)
+	{
+		loadedModel->RenderUI();
+	}
+}
+
 void ModuleModel::LoadModel(const std::string& filePath)
 {
 	delete loadedModel;

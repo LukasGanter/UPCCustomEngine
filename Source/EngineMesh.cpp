@@ -6,6 +6,7 @@
 #include "ModuleTexture.h"
 #include "SDL.h"
 #include "GL/glew.h"
+#include "imgui/imgui.h"
 #include "Math/float3.h"
 #include "tinyGltf/tiny_gltf.h"
 
@@ -29,10 +30,13 @@ void EngineMesh::Load(const tinygltf::Model& model, const tinygltf::Mesh& mesh, 
 	LoadVBO(model, mesh, primitive);
 	LoadEBO(model, mesh, primitive);
 	CreateVAO();
+
+	meshTitle = mesh.name;
 }
 
 void EngineMesh::LoadVBO(const Model& model, const Mesh& mesh, const Primitive& primitive)
 {
+	
 	const auto& itPos = primitive.attributes.find("POSITION");
 	if (itPos != primitive.attributes.end())
 	{
@@ -150,7 +154,7 @@ void EngineMesh::CreateVAO()
 
 void EngineMesh::Draw()
 {
-	const int loadedTexture = App->GetTexture()->getLoadedTextureID(materialIndex);
+	const int loadedTexture = App->GetTexture()->getLoadedTextureID();
 	if (loadedTexture != -1)
 	{
 		glActiveTexture(GL_TEXTURE0);
@@ -158,6 +162,13 @@ void EngineMesh::Draw()
 	}
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
+}
+
+void EngineMesh::RenderUI()
+{
+	ImGui::Text(("Mesh: " + meshTitle).c_str());
+	ImGui::Text(("Vertices: " + std::to_string(vertexCount)).c_str());
+	ImGui::Text(("Triangles: " + std::to_string(indexCount / 3)).c_str());
 }
 
 

@@ -3,6 +3,8 @@
 #include "DirectXTex.h"
 #include <memory>
 
+#include "imgui/imgui.h"
+
 ModuleTexture::ModuleTexture()
 {
 	
@@ -11,9 +13,10 @@ ModuleTexture::ModuleTexture()
 // Destructor
 ModuleTexture::~ModuleTexture()
 {
-	for (const auto& texture : meshTextures)
-		glDeleteTextures(1, &texture);
-	meshTextures.clear();
+	if (textureValid)
+	{
+		glDeleteTextures(1, &meshTexture);
+	}
 }
 
 // Called before render is available
@@ -47,13 +50,30 @@ bool ModuleTexture::CleanUp()
 	return true;
 }
 
+void ModuleTexture::RenderUI()
+{
+	if (textureValid)
+	{
+		if (ImGui::CollapsingHeader(loadedTextureName.c_str())) {
+			ImGui::Text(("Width: " + std::to_string(loadedTextureWidth)).c_str());
+			ImGui::Text(("Height: " + std::to_string(loadedTextureHeight)).c_str());
+			ImGui::Image(meshTexture, ImVec2(300, 300.f * loadedTextureHeight / loadedTextureWidth));
+		}
+	} else
+	{
+		if (ImGui::CollapsingHeader("No texture loaded")) {}
+	}
+	
+}
+
 GLuint ModuleTexture::LoadTexture(const std::string& texturePath)
 {
-	for (const auto& texture : meshTextures)
-		glDeleteTextures(1, &texture);
-	meshTextures.clear();
+	if (textureValid)
+	{
+		glDeleteTextures(1, &meshTexture);
+	textureValid = false;
+	}
 	
-	// TODO Only works for ASCII strings
 	std::wstring widestr = std::wstring(texturePath.begin(), texturePath.end());
 	const wchar_t* path = widestr.c_str();
 	
@@ -74,10 +94,15 @@ GLuint ModuleTexture::LoadTexture(const std::string& texturePath)
 		}
 	}
 
+	loadedTextureWidth = image->GetMetadata().width;
+	loadedTextureHeight = image->GetMetadata().height;
+	const unsigned long long splitPositionFileName = texturePath.find_last_of("\\");
+	loadedTextureName = texturePath.substr(splitPositionFileName + 1, texturePath.length());
+
 	GLint internalFormat = GL_NONE;
 	GLint format = GL_NONE;
 	GLenum type = GL_NONE;
-
+	
 	switch (image->GetMetadata().format)
 	{
 	case DXGI_FORMAT_R8G8B8A8_UNORM:
@@ -100,28 +125,27 @@ GLuint ModuleTexture::LoadTexture(const std::string& texturePath)
 	default:
 		assert(false && "Unsupported format");
 	}
-	GLuint texture;
 	
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glGenTextures(1, &meshTexture);
+	glBindTexture(GL_TEXTURE_2D, meshTexture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, image->GetMetadata().width, image->GetMetadata().height,
 		0, format, type, image->GetPixels());
 	glGenerateMipmap(GL_TEXTURE_2D);
-	glActiveTexture(GL_TEXTURE0);	// TODO Always Texture0 can not be correct
+	glActiveTexture(GL_TEXTURE0);	
 
-	meshTextures.push_back(texture);
+	textureValid = true;
 	
-	return texture;
+	return meshTexture;
 }
 
-const int ModuleTexture::getLoadedTextureID(const int Index) const
+const int ModuleTexture::getLoadedTextureID() const
 {
-	if (Index >= 0 && Index < meshTextures.size())
+	if (textureValid)
 	{
-		return meshTextures[Index];
+		return meshTexture;
 	}
-
 	return -1;
 }
+
 

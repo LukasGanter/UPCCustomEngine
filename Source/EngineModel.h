@@ -15,11 +15,13 @@ public:
 	const float3* getMinPosValues() const { return minPosValues; }
 	const float3* getMaxPosValues() const { return maxPosValues; }
 
+	void RenderUI();
+
 private:
 	
 	void LoadMaterials(const std::string& modelPath, const tinygltf::Model &srcModel);
 
-	//std::vector<std::unique_ptr<EngineMesh>> meshes;
+	std::string modelName;
 	std::vector<EngineMesh*> meshes;
 
 	float3* minPosValues = nullptr;

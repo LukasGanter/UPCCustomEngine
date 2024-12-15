@@ -29,6 +29,8 @@ public:
 
 	void Draw();
 
+	void RenderUI();
+
 	const float3* GetMinPosValues() const { return minPosValues; }
 	const float3* GetMaxPosValues() const { return maxPosValues; }
 
@@ -44,6 +46,7 @@ private:
 	unsigned ebo;
 	unsigned vao;
 
+	std::string meshTitle;
 	size_t indexCount = -1;
 	size_t vertexCount = -1;
 	int materialIndex = -1;

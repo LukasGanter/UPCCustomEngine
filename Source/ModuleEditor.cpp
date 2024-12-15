@@ -3,6 +3,7 @@
 #include "ModuleEditor.h"
 
 #include "ModuleCamera.h"
+#include "ModuleModel.h"
 #include "ModuleWindow.h"
 #include "ModuleOpenGL.h"
 #include "SDL.h"
@@ -106,6 +107,9 @@ void ModuleEditor::Draw()
 			if (ImGui::MenuItem("Logs")) {
 				show_log_window = !show_log_window;
 			}
+			if (ImGui::MenuItem("Properties")) {
+				show_properties_window = !show_properties_window;
+			}
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
@@ -126,6 +130,9 @@ void ModuleEditor::Draw()
 
 	if (show_log_window)
 		ShowLogWindow(&show_log_window);
+
+	if (show_properties_window)
+		ShowPropertiesWindow(&show_properties_window);
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -204,4 +211,11 @@ void ModuleEditor::ShowLogWindow(bool* open)
 	if (ImGui::Button("Close")) {
 		show_log_window = false;
 	}
+}
+
+void ModuleEditor::ShowPropertiesWindow(bool* open)
+{
+	ImGui::Begin("Properties", &show_properties_window, ImGuiWindowFlags_MenuBar);
+	App->GetModel()->RenderUI();
+	ImGui::End();
 }
