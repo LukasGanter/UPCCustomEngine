@@ -181,13 +181,17 @@ void ModuleEditor::ShowGraphicsWindow(bool* open)
 
 void ModuleEditor::ShowApplicationsWindow(bool* open)
 {
-	if (ImGui::CollapsingHeader("Application")) {
-		ImGui::PlotHistogram("##framerate", &fpsBuffer[0], fpsBuffer.size(), tickBufferPtr, "Framerate", 0.0f, 100.f, ImVec2(310, 100));
-		ImGui::PlotHistogram("##milliseconds", &deltaTickBuffer[0], deltaTickBuffer.size(), tickBufferPtr, "Milliseconds", 0.0f, 40.f, ImVec2(310, 100));
-	}
+	ImGui::Begin("Application options");
+	
+	ImGui::PlotHistogram("##framerate", &fpsBuffer[0], fpsBuffer.size(), tickBufferPtr, "Framerate", 0.0f, 100.f, ImVec2(310, 100));
+	ImGui::PlotHistogram("##milliseconds", &deltaTickBuffer[0], deltaTickBuffer.size(), tickBufferPtr, "Milliseconds", 0.0f, 40.f, ImVec2(310, 100));
+	
+	App->GetOpenGL()->RenderUI();
+	
 	if (ImGui::Button("Close")) {
 		show_application_window = false;
 	}
+	ImGui::End();
 }
 
 void ModuleEditor::ShowLogWindow(bool* open)

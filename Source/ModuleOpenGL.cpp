@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "GL/glew.h"
+#include "imgui/imgui.h"
 
 ModuleOpenGL::ModuleOpenGL()
 {
@@ -81,7 +82,32 @@ bool ModuleOpenGL::CleanUp()
 	return true;
 }
 
-void ModuleOpenGL::WindowResized(unsigned width, unsigned height)
+void ModuleOpenGL::RenderUI()
 {
+	int totalMemory, freeMemory, textureFreeMemory = -1;
+	if (glewIsExtensionSupported("GL_NVX_gpu_memory_info")) {
+		glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &totalMemory);
+		glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &freeMemory);
+	}
+
+	if (glewIsExtensionSupported("GL_ATI_meminfo")) {
+		glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, &textureFreeMemory);
+	}
+
+	ImGui::Text("Total memory available: %f mb", totalMemory / 1024.);
+	ImGui::Text("Current memory available: %f mb", freeMemory / 1024.);
+	ImGui::Text("Total texture memory available: %f mb", textureFreeMemory / 1024.);
+	ImGui::Separator();
+	ImGui::Text("SDL version: 4.6");
+	ImGui::Text("SDL double buffer: 1");
+	ImGui::Text("SDL depth stencil: 24");
+	ImGui::Text("SDL stencil size: 8");
+	ImGui::Separator();
+	ImGui::Text("GLEW version: %s", glewGetString(GLEW_VERSION));
+	ImGui::Text("Vendor: %s", glGetString(GL_VENDOR));
+	ImGui::Text("Renderer: %s", glGetString(GL_RENDERER));
+	ImGui::Text("OpenGL version supported %s", glGetString(GL_VERSION));
+	ImGui::Text("GLSL: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	
 }
 
