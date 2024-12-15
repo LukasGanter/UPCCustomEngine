@@ -13,6 +13,7 @@ Controls
 - LAlt + left mouse click to orbit the loaded mesh
 - Mouse wheel for zooming
 - F to focus the loaded mesh
+- Shift increases the movement speed
 - Drag and Drop for gltf files and textures to load them into the engine
 - ImGui menus to see different statistics and to change parameters such as fov and near / far clipping planes
 
