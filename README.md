@@ -15,3 +15,7 @@ Controls
 - F to focus the loaded mesh
 - Drag and Drop for gltf files and textures to load them into the engine
 - ImGui menus to see different statistics and to change parameters such as fov and near / far clipping planes
+
+
+Github project link
+https://github.com/LukasGanter/UPCCustomEngine
